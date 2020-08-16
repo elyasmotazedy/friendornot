@@ -1,25 +1,21 @@
-import React, { useState,useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import uuid from "uuid";
 import Spinner from "../../components/layout/Spinner";
 import { getCurrentProfile } from "../../actions/profile";
-import { findPerfectMatch , cancelMatch  } from "../../actions/match";
+import { findPerfectMatch, cancelMatch } from "../../actions/match";
 import AlertMsg from "../../components/layout/AlertMsg";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 import Chat from "../Chat/Chat";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-
-
-
-
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const Dashboard = ({
   getCurrentProfile,
@@ -29,8 +25,7 @@ const Dashboard = ({
   auth: { user },
   profile: { profile, loading },
 }) => {
-
-  const [gender, setFormData] = useState('');
+  const [gender, setFormData] = useState("");
   useEffect(() => {
     getCurrentProfile();
   }, []);
@@ -40,16 +35,13 @@ const Dashboard = ({
     findPerfectMatch({ gender: gender, room: id });
   };
 
-
   const cancelChat = () => {
-    cancelMatch({ user : user.id });
+    cancelMatch({ user: user.id });
   };
 
-
-  const onChange = (e) =>{
-   setFormData(e.target.value)
-  }
-
+  const onChange = (e) => {
+    setFormData(e.target.value);
+  };
 
   return loading && profile === null ? (
     <Spinner />
@@ -99,7 +91,7 @@ const Dashboard = ({
           >
             cancel
           </Button>
-          {match.matchedUser !== null ? (
+          {match.matchedUser !== null && match.matchedUser.room ? (
             <Chat room={match.matchedUser.room} />
           ) : (
             ""
@@ -116,7 +108,11 @@ const Dashboard = ({
           >
             Send
           </Button>
-          <Chat room="js" />
+          {match.matchedUser !== null && match.matchedUser.room ? (
+            <Chat room={match.matchedUser.room} />
+          ) : (
+            ""
+          )}
         </Fragment>
       )}
     </Fragment>
@@ -141,5 +137,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getCurrentProfile,
   findPerfectMatch,
-  cancelMatch
+  cancelMatch,
 })(Dashboard);
