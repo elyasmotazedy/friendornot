@@ -18,7 +18,8 @@ const Chat = ({room}) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [Pmessage, setPMessage] = useState('');
-  const ENDPOINT = 'https://tranquil-ravine-27749.herokuapp.com';
+  // const ENDPOINT = 'https://tranquil-ravine-27749.herokuapp.com';
+  const ENDPOINT = 'http://localhost:5000';
 
 
 
