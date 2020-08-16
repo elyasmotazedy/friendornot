@@ -30,6 +30,7 @@ const Chat = ({room}) => {
     // setRoom(room);
     // setName(name)
     // console.log(socket)
+    // console.log(socket)
     socket.emit('join', { name, room }, (error) => {
       if(error) {
         alert(error);
