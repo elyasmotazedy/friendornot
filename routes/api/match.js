@@ -6,9 +6,6 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
-
-
-
 // @route   POST api/match
 // @des     Create match request
 // @access  Private
@@ -22,56 +19,76 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { gender,room } = req.body;
+    const { gender, room, name , avatar } = req.body;
     const genderRequest = gender === "female" ? "male" : "female";
-    // const matchFields = {};
 
     try {
-      const userLocation = await Profile.findOne({ user: req.user.id }).select(
-        "location"
+      const userInfo = await Profile.findOne({
+        user: req.user.id,
+      }).populate("user", ["name", "avatar"]);
+      const genderSearch = await Match.find({ gender: genderRequest , available : true});
+      const findUserRequest = await Match.findOne({ 'user.id': req.user.id }).select(
+        "available"
       );
-      const genderSearch = await Match.find({ gender: genderRequest });
-      const findUserRequest = await Match.findOne({ user: req.user.id });
-
       // check user cant not send request more than one
-      if (findUserRequest) {
-        return res.json({msg : "You have sent request already"})
+      if (findUserRequest && findUserRequest.available === true) {
+        return res.json({ msg: "You have sent request already" });
       }
 
       // find prefect match to chat
       if (genderSearch.length !== 0) {
-        const perfectMatch = genderSearch.find((obj) =>
-          obj.location.label === userLocation.location.label
+        const perfectMatch = genderSearch.find(
+          (obj) => obj.location.label === userInfo.location.label
         );
-        
 
         if (perfectMatch) {
-          await Match.findByIdAndRemove(perfectMatch.id);
-          return res.json(perfectMatch);
+         const newPerfectMatch = await Match.findOneAndUpdate(
+            { _id: perfectMatch.id },
+            {
+              available: false,
+              partner: {
+                id: userInfo.user.id,
+                name: userInfo.user.name,
+                avatar: userInfo.user.avatar,
+              },
+            },
+            { new: true }
+          );
+          return res.json(newPerfectMatch);
         }
 
-        //if didn't find perfect match send first element in array 
-         await Match.findByIdAndRemove(genderSearch[0].id);
-         return res.json(genderSearch[0]);
+        //if didn't find perfect match send first element in array
+        const newPerfectMatch = await Match.findOneAndUpdate(
+          { _id: genderSearch[0].id },
+          {
+            available: false,
+            partner: {
+              id: userInfo.user.id,
+              name: userInfo.user.name,
+              avatar: userInfo.user.avatar,
+            },
+          },
+          { new: true }
+        );
+        return res.json(newPerfectMatch);
       }
 
       //Create
-     
+
       const match = new Match({
-        user: req.user.id,
+        user: {id:req.user.id, name, avatar} ,
         gender,
-        location: userLocation.location,
-        room
+        location: userInfo.location,
+        room,
       });
       await match.save();
-      res.json({ room , msg: "Finding perfect match for you" });
+      res.json({ room, msg: "Finding perfect match for you"});
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
     }
   }
 );
-
 
 // @route   DELETE api/match
 // @des     Delete request for chat

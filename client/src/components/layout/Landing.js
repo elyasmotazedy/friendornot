@@ -109,7 +109,7 @@ const Landing = () => {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <Grid item xs={false} sm={5} md={8} className={classes.image}>
         <Box className={classes.intro}>
           <Typography variant="h1" component="h2" align="center">

@@ -31,8 +31,6 @@ router.post('/register', [
 
     try {
         let user = await User.findOne({email : email});
-        // console.log(email)
-        console.log(user)
         if (user) {
             return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
         }
