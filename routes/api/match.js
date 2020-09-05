@@ -6,6 +6,8 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
+const matchEventEmitter = Match.watch();
+
 // @route   POST api/match
 // @des     Create match request
 // @access  Private
@@ -19,17 +21,20 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { gender, room, name , avatar } = req.body;
+    const { gender, room, name, avatar } = req.body;
     const genderRequest = gender === "female" ? "male" : "female";
 
     try {
       const userInfo = await Profile.findOne({
         user: req.user.id,
       }).populate("user", ["name", "avatar"]);
-      const genderSearch = await Match.find({ gender: genderRequest , available : true});
-      const findUserRequest = await Match.findOne({ 'user.id': req.user.id }).select(
-        "available"
-      );
+      const genderSearch = await Match.find({
+        gender: genderRequest,
+        available: true,
+      });
+      const findUserRequest = await Match.findOne({
+        "user.id": req.user.id,
+      }).select("available");
       // check user cant not send request more than one
       if (findUserRequest && findUserRequest.available === true) {
         return res.json({ msg: "You have sent request already" });
@@ -42,7 +47,7 @@ router.post(
         );
 
         if (perfectMatch) {
-         const newPerfectMatch = await Match.findOneAndUpdate(
+          const newPerfectMatch = await Match.findOneAndUpdate(
             { _id: perfectMatch.id },
             {
               available: false,
@@ -54,6 +59,7 @@ router.post(
             },
             { new: true }
           );
+
           return res.json(newPerfectMatch);
         }
 
@@ -70,19 +76,29 @@ router.post(
           },
           { new: true }
         );
+
         return res.json(newPerfectMatch);
       }
 
       //Create
 
       const match = new Match({
-        user: {id:req.user.id, name, avatar} ,
+        user: { id: req.user.id, name, avatar },
         gender,
         location: userInfo.location,
         room,
       });
+
+      // let er = false;
+      // matchEventEmitter.on("change", (change) => {
+      //   // if (change.updateDescription) {
+      //     er = true
+      //     // console.log(change.updateDescription.updatedFields.partner)
+      //     console.log(change)
+      //   // }
+      // });
       await match.save();
-      res.json({ room, msg: "Finding perfect match for you"});
+      res.json({ room, msg: "Finding perfect match for you" });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -90,14 +106,19 @@ router.post(
   }
 );
 
-// @route   DELETE api/match
-// @des     Delete request for chat
+// @route   POST api/match/cancel
+// @des     Update available request for chat
 // @access  Private
 
-router.delete("/", auth, async (req, res) => {
+router.post("/cancel", auth, async (req, res) => {
   try {
-    await Match.findOneAndRemove({ user: req.user.id });
-
+    const er = await Match.findOneAndUpdate(
+      { "user.id": { $in: req.user.id } },
+      {
+        available: false,
+      },
+      { new: true }
+    );
     res.json({ msg: "You canceled the request" });
   } catch (err) {
     console.error(err.message);

@@ -4,37 +4,49 @@ const Schema = mongoose.Schema;
 // Create Schema
 const MatchSchema = new Schema({
   user: {
-    id:{
+    id: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    name:{
+    name: {
       type: String,
     },
-    avatar:{
-      type: String
-    }
+    avatar: {
+      type: String,
+    },
   },
-  partner:{
-    type: Object
+  partner: {
+    type: Object,
   },
   location: {
     type: Object,
-    required: true
+    required: true,
   },
   gender: {
     type: String,
-    required: true
+    required: true,
   },
   room: {
     type: String,
-    required: true
+    required: true,
   },
   available: {
     type: Boolean,
     required: true,
-    default: true
+    default: true,
   },
+  // partner: {
+  //   id: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "User",
+  //   },
+  //   name: {
+  //     type: String,
+  //   },
+  //   avatar: {
+  //     type: String,
+  //   },
+  // },
   date: {
     type: Date,
     default: Date.now,

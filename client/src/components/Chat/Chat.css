@@ -1,20 +1,19 @@
 .outerContainer {
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center; */
-  /* height: 100vh; */
+  align-items: center;
+  margin: 100px 0;
   /* background-color: #1A1A1D; */
-  margin: 100px 0 
 }
 
 .container {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between; */
+  justify-content: space-between;
   background: #FFFFFF;
   border-radius: 8px;
-  /* height: 60%; */
-  /* width: 35%; */
+  min-height: 500px;
+  width: 100%;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

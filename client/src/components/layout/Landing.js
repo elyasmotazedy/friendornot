@@ -156,7 +156,7 @@ const Landing = () => {
             </AppBar>
             {/* Alert when error happens */}
             <AlertMsg />
-            <TabPanel value={value} index={0}>
+            <TabPanel  value={value} index={0}>
               <Login />
             </TabPanel>
             <TabPanel value={value} index={1}>

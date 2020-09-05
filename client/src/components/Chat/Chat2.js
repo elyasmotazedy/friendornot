@@ -10,25 +10,25 @@ import './Chat.css';
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chat2 = ({room, other, partnerName }) => {
   const rand = Math.floor(Math.random() * 110); 
-  const [name, setName] = useState(`elyas2`);
-  const [room, setRoom] = useState('js');
+  const [name, setName] = useState(partnerName);
+  // const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = 'http://localhost:5000';
-  // socket.emit('come_online', loggedInSocket);
+  const [partner, setPartner] = useState('');
+  const ENDPOINT = 'https://tranquil-ravine-27749.herokuapp.com';
+  // const ENDPOINT = 'http://localhost:5000/';
+
 
 
   useEffect(() => {
-    // const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
 
     // setRoom(room);
-    // setName(name)
-    // console.log(socket)
+    setName(partnerName)
     socket.emit('join', { name, room }, (error) => {
       if(error) {
         alert(error);
@@ -37,6 +37,7 @@ const Chat = ({ location }) => {
   }, [ENDPOINT]);
   
   useEffect(() => {
+
     socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
@@ -50,7 +51,6 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     if(message) {
-      // socket.emit('sendMessage', 'salam', 'elyas2', name); 
       socket.emit('sendMessage', message, () => setMessage(''));
     }
   }
@@ -58,7 +58,7 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
-          <InfoBar room={room} />
+          <InfoBar room={room} partner={other} partnerName={partnerName} user={users} />
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
@@ -67,4 +67,4 @@ const Chat = ({ location }) => {
   );
 }
 
-export default Chat;
+export default Chat2;

@@ -41,7 +41,7 @@ export const cancelMatch = (userId) => async (dispatch) => {
       },
     };
 
-    const res = await axios.delete("/api/match", userId, config);
+    const res = await axios.post("/api/match/cancel", userId, config);
 
     dispatch({
       type: CANCEL_MATCH,

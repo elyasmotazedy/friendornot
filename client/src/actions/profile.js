@@ -2,10 +2,16 @@ import axios from "axios";
 import { setAlert } from "./alert";
 
 import { GET_PROFILE, GET_PROFILES, CLEAR_PROFILE, PROFILE_ERROR } from "./types";
-
+import setAuthToken from "../utils/setAuthToken";
 // Get current users profile
 
 export const getCurrentProfile = () => async (dispatch) => {
+
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+
   try {
     const res = await axios.get("/api/profile/me");
     dispatch({
