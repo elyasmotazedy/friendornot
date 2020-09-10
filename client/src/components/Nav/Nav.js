@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Nav = ({ auth: { user }, logout }) => {
+const Nav = ({ auth: { user }, logout , history}) => {
   const classes = useStyles();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -100,16 +100,17 @@ const Nav = ({ auth: { user }, logout }) => {
                     Edit profile
                   </Button>
                 </Link>
-                <Link to="/edit-profile" className={classes.navItem}>
+                {/* <a onClick={() =>logout(history)} href='#'>logout</a> */}
+                {/* <Link to="/logout" className={classes.navItem}> */}
                   <Button
                     // variant="contained"
                     color="default"
                     startIcon={<PowerSettingsNewIcon />}
-                    onClick={logout}
+                    onClick={() =>logout(history)}
                   >
                     Logout
                   </Button>
-                </Link>
+                {/* </Link> */}
               </MenuItem>
             </Menu>
           </div>
@@ -125,8 +126,7 @@ Nav.prototypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
-  logout,
+  auth: state.auth
 });
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps,{logout})(withRouter(Nav));

@@ -8,7 +8,6 @@ import Landing from "./components/layout/Landing";
 import Dashboard from "./components/dashboard/Dashboard";
 import Profile from "./components/profile/Profile";
 import Chat from "./components/Chat/Chat";
-import Chat2 from "./components/Chat/Chat2";
 import Join from "./components/Join/Join";
 
 import CreateProfile from "./components/profile-form/CreateProfile";
@@ -38,7 +37,7 @@ const App = () => {
             {/* <PrivteRoute exact path="/dashboard" component={Dashboard} /> */}
             <Route exact path="/dashboard" component={Dashboard} />
             <PrivteRoute path="/chat" exact component={Chat} />
-            <PrivteRoute path="/chat2" exact component={Chat2} />
+            {/* <PrivteRoute path="/chat2" exact component={Chat2} /> */}
 
             <PrivteRoute
               exact

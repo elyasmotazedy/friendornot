@@ -210,15 +210,14 @@ const Register = ({
             <Grid item xs={12}>
               <FormControl component="fieldset" fullWidth>
                 <FormLabel component="legend">Gender</FormLabel>
-                
-                  <RadioGroup
-                    aria-label="gender"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => onChange(e)}
-                    
-                  >
-                    <Box flexDirection="unset">
+
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => onChange(e)}
+                >
+                  <Box flexDirection="unset">
                     <FormControlLabel
                       value="female"
                       control={<Radio />}
@@ -234,9 +233,8 @@ const Register = ({
                       control={<Radio />}
                       label="Other"
                     />
-                    </Box>
-                  </RadioGroup>
-        
+                  </Box>
+                </RadioGroup>
               </FormControl>
             </Grid>
             <Grid item xs={12}>

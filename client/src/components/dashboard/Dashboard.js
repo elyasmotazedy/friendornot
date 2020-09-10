@@ -30,6 +30,8 @@ const Dashboard = ({
     getCurrentProfile();
   }, []);
 
+
+  // console.log(match)
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -45,9 +47,15 @@ const Dashboard = ({
 
           <Grid xs={9} item style={{ marginTop: "50px", padding: "0 30px" }}>
             <UserInfo />
-            <FindFriend />
+            {!match.partnerFinded ? <FindFriend /> : ""}
+            {/* <FindFriend /> */}
 
             {match.matchedUser !== null && match.matchedUser.room ? (
+              <Chat />
+            ) : (
+              ""
+            )}
+            {/* {match.matchedUser !== null && match.matchedUser.room ? (
               <Chat
               // room={match.matchedUser.room}
               // partnerName={user && user.name}
@@ -55,7 +63,7 @@ const Dashboard = ({
               />
             ) : (
               ""
-            )}
+            )} */}
           </Grid>
           <Premium />
         </Grid>
@@ -73,7 +81,6 @@ Dashboard.prototypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
-
   match: state.match,
 });
 

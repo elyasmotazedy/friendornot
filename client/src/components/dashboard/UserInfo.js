@@ -56,7 +56,7 @@ const UserInfo = ({
           <div>
             {profile &&
               profile.hobbies.map((item) => (
-                <Chip style={{ margin: "0 5px 5px 5px" }} label={item} />
+                <Chip key={item} style={{ margin: "0 5px 5px 5px" }} label={item} />
               ))}
           </div>
         </CardContent>

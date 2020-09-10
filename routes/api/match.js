@@ -106,20 +106,38 @@ router.post(
   }
 );
 
+// @route   POST api/match/getAvailableChat
+// @des     get chat request if avalable is true
+// @access  Private
+
+router.post("/getAvailableChat", auth, async (req, res) => {
+  try {
+    const availableChat = await await Match.findOne({
+      "user.id": req.user.id,
+      available : true
+    })
+
+    res.json(availableChat);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   POST api/match/cancel
 // @des     Update available request for chat
 // @access  Private
 
 router.post("/cancel", auth, async (req, res) => {
   try {
-    const er = await Match.findOneAndUpdate(
+     await Match.findOneAndUpdate(
       { "user.id": { $in: req.user.id } },
       {
         available: false,
       },
       { new: true }
     );
-    res.json({ msg: "You canceled the request" });
+    res.json({canceled: true,  msg: "You canceled the request" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

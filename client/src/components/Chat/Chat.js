@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
+import {
+  partnerFinder,
+  partnerDisconnected,
+  getAvailableChat,
+} from "../../actions/match";
 
 import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
@@ -12,11 +17,11 @@ import "./Chat.css";
 let socket;
 
 const Chat = ({
-  match: { room, matchedUser },
+  match: { matchedUser },
   auth: { user },
-  partnerName,
+  partnerFinder,
+  partnerDisconnected,
 }) => {
-  console.log('sdfd', user)
   // const [name, setName] = useState(partnerName);
   const [name, setName] = useState(user && user.name);
   // const [room, setRoom] = useState('');
@@ -24,30 +29,41 @@ const Chat = ({
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [partner, setPartner] = useState("");
-  const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
-  // const ENDPOINT = 'http://localhost:5000/';
+  // const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
+  const ENDPOINT = "http://localhost:5000/";
 
   useEffect(() => {
     socket = io(ENDPOINT);
-
-    // setRoom(room);
-    setName(partnerName);
-    socket.emit("join", { name, room }, (error) => {
+    socket.emit("join", { name, room: matchedUser.room }, (error) => {
       if (error) {
         alert(error);
       }
     });
-  }, [ENDPOINT]);
+  }, [ENDPOINT, name, matchedUser.room]);
 
   useEffect(() => {
     socket.on("message", (message) => {
+      if (
+        message.user === "Admin" &&
+        message.text.indexOf("has left.") !== -1
+      ) {
+        partnerDisconnected();
+      }
       setMessages((messages) => [...messages, message]);
     });
 
     socket.on("roomData", ({ users }) => {
-      console.log('users',users)
       setUsers(users);
+      if (users.length === 2) {
+        partnerFinder(true);
+      } else {
+        partnerFinder(false);
+      }
     });
+
+    // socket.on('connect', () => {
+    //   console.log(socket.disconnected); // false
+    // });
   }, []);
 
   const sendMessage = (event) => {
@@ -57,23 +73,23 @@ const Chat = ({
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
+  console.log(users)
 
-
-  return (
+  return users.length === 2 ? (
     <div className="outerContainer">
       <div className="container">
         <div className="infoBar">
           <div className="leftInnerContainer">
             {/* <img className="onlineIcon" src={onlineIcon} alt="online icon" /> */}
             <h3>
-              Your chating with
+              Your chating with{" "}
               {matchedUser !== null && matchedUser.user !== undefined
                 ? matchedUser.user.name
                 : ""}
               {matchedUser !== null &&
               matchedUser.user === undefined &&
-              user[0] !== undefined
-                ? user[0].name
+              users[1] !== undefined
+                ? users[1].name
                 : ""}
             </h3>
           </div>
@@ -89,6 +105,8 @@ const Chat = ({
         />
       </div>
     </div>
+  ) : (
+    ""
   );
 };
 
@@ -98,6 +116,8 @@ Chat.prototypes = {
   matchedUser: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   cancelMatch: PropTypes.func.isRequired,
+  partnerFinder: PropTypes.func.isRequired,
+  partnerDisconnected: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -108,4 +128,7 @@ const mapStateToProps = (state) => ({
   match: state.match,
 });
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps, {
+  partnerFinder,
+  partnerDisconnected,
+})(Chat);

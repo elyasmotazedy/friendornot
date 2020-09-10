@@ -35,18 +35,6 @@ const MatchSchema = new Schema({
     required: true,
     default: true,
   },
-  // partner: {
-  //   id: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-  //   name: {
-  //     type: String,
-  //   },
-  //   avatar: {
-  //     type: String,
-  //   },
-  // },
   date: {
     type: Date,
     default: Date.now,
