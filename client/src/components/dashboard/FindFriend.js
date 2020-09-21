@@ -6,7 +6,7 @@ import uuid from "uuid";
 import {
   findPerfectMatch,
   cancelMatch,
-  getAvailableChat,
+  getAvailableChat
 } from "../../actions/match";
 
 import Grid from "@material-ui/core/Grid";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FindFriend = ({
-  auth: { user },
+  auth: { userInfo },
   findPerfectMatch,
   cancelMatch,
   match,
@@ -38,7 +38,7 @@ const FindFriend = ({
 }) => {
   const classes = useStyles();
   const [gender, setFormData] = useState("");
-
+  const { user } = userInfo !== null ? userInfo : "";
   const requestToChat = () => {
     const id = uuid.v4();
     findPerfectMatch({
@@ -59,7 +59,8 @@ const FindFriend = ({
   const onChange = (e) => {
     setFormData(e.target.value);
   };
-  console.log(match)
+
+
   return (
     <Grid xs={12} item align="center" className={classes.findGender}>
       <FormControl component="fieldset">
@@ -81,7 +82,8 @@ const FindFriend = ({
       </FormControl>
 
       <p>{match.matchedUser !== null ? match.matchedUser.msg : ""}</p>
-      {match.availableChat !== null ||
+      {
+      match.availableChat !== null ||
       (match.matchedUser !== null && match.matchedUser.room) ? (
         <Fragment>
           <div xs={12} item align="center">
@@ -121,7 +123,7 @@ FindFriend.prototypes = {
   matchedUser: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   cancelMatch: PropTypes.func.isRequired,
-  getAvailableChat: PropTypes.func.isRequired,
+  getAvailableChat: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -133,5 +135,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   findPerfectMatch,
   cancelMatch,
-  getAvailableChat,
+  getAvailableChat
 })(FindFriend);

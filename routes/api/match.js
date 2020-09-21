@@ -89,13 +89,12 @@ router.post(
         room,
       });
 
-      // let er = false;
       // matchEventEmitter.on("change", (change) => {
-      //   // if (change.updateDescription) {
-      //     er = true
+      //   if (change.updateDescription) {
       //     // console.log(change.updateDescription.updatedFields.partner)
       //     console.log(change)
-      //   // }
+      //     res.json(change.updateDescription.updatedFields.partner);
+      //   }
       // });
       await match.save();
       res.json({ room, msg: "Finding perfect match for you" });

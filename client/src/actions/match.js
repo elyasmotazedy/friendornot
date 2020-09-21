@@ -5,9 +5,10 @@ import {
   MATCH_ERROR,
   PARTNER_FINDED,
   PARTNER_DISCONNECTED,
-  AVAILABLE_CHAT
+  AVAILABLE_CHAT,
+  TIMES_UP
 } from "./types";
-
+import { setAlert } from "./alert";
 // Find perfect match
 
 export const findPerfectMatch = (formData) => async (dispatch) => {
@@ -63,16 +64,22 @@ export const getAvailableChat = () => async (dispatch) => {
   }
 };
 
-export const partnerFinder = (hasPartner) => (dispatch) => {
+export const partnerFinder = (hasPartner,partner) => (dispatch) => {
   dispatch({
     type: PARTNER_FINDED,
-    payload: hasPartner,
+    payload: {hasPartner,partner},
   });
 };
 export const partnerDisconnected = () => (dispatch) => {
   dispatch({
     type: PARTNER_DISCONNECTED
   });
+};
+export const timesUp = () => (dispatch) => {
+  dispatch({
+    type: TIMES_UP
+  });
+  dispatch(setAlert('your times up', "error"))
 };
 
 // Cancel request to chat
@@ -86,11 +93,11 @@ export const cancelMatch = (userId) => async (dispatch) => {
     };
 
     const res = await axios.post("/api/match/cancel", userId, config);
-
     dispatch({
       type: CANCEL_MATCH,
       payload: res.data,
     });
+    dispatch(setAlert(res.data.msg, "error"))
   } catch (err) {
     const errors = err.response.data.errors;
     // if (errors) {

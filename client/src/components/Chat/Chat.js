@@ -18,28 +18,33 @@ let socket;
 
 const Chat = ({
   match: { matchedUser },
-  auth: { user },
+  auth: { userInfo },
   partnerFinder,
   partnerDisconnected,
 }) => {
+  // const { user } = userInfo !== null ? userInfo : "";
   // const [name, setName] = useState(partnerName);
-  const [name, setName] = useState(user && user.name);
+  // const [name, setName] = useState(user && user.name);
+  const [userJoined, setUserJoined] = useState(
+    userInfo !== null ? userInfo : ""
+  );
+  console.log('userInfo',userInfo)
   // const [room, setRoom] = useState('');
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [partner, setPartner] = useState("");
-  // const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
-  const ENDPOINT = "http://localhost:5000/";
+  const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
+  // const ENDPOINT = "http://localhost:5000/";
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit("join", { name, room: matchedUser.room }, (error) => {
+    socket.emit("join", { userJoined, room: matchedUser.room }, (error) => {
       if (error) {
         alert(error);
       }
     });
-  }, [ENDPOINT, name, matchedUser.room]);
+  }, [ENDPOINT, userJoined, matchedUser.room]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -55,9 +60,12 @@ const Chat = ({
     socket.on("roomData", ({ users }) => {
       setUsers(users);
       if (users.length === 2) {
-        partnerFinder(true);
+        const partner = users.find(
+          (user) => user.profile._id !== userInfo.profile._id
+        );
+        partnerFinder(true,partner);
       } else {
-        partnerFinder(false);
+        partnerFinder(false,null);
       }
     });
 
@@ -73,7 +81,6 @@ const Chat = ({
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
-  console.log(users)
 
   return users.length === 2 ? (
     <div className="outerContainer">
@@ -97,7 +104,7 @@ const Chat = ({
             <a href="/">{/* <img src={closeIcon} alt="close icon" /> */}</a>
           </div>
         </div>
-        <Messages messages={messages} name={name} />
+        <Messages messages={messages} name={userJoined.user.name} />
         <Input
           message={message}
           setMessage={setMessage}

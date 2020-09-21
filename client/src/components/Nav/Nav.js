@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link ,withRouter} from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Nav = ({ auth: { user }, logout , history}) => {
+const Nav = ({ auth: { userInfo }, logout, history }) => {
   const classes = useStyles();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +55,7 @@ const Nav = ({ auth: { user }, logout , history}) => {
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  const { user } = userInfo !== null ? userInfo : "";
   return (
     <AppBar position="static" className={classes.userNav}>
       <Container>
@@ -102,14 +102,14 @@ const Nav = ({ auth: { user }, logout , history}) => {
                 </Link>
                 {/* <a onClick={() =>logout(history)} href='#'>logout</a> */}
                 {/* <Link to="/logout" className={classes.navItem}> */}
-                  <Button
-                    // variant="contained"
-                    color="default"
-                    startIcon={<PowerSettingsNewIcon />}
-                    onClick={() =>logout(history)}
-                  >
-                    Logout
-                  </Button>
+                <Button
+                  // variant="contained"
+                  color="default"
+                  startIcon={<PowerSettingsNewIcon />}
+                  onClick={() => logout(history)}
+                >
+                  Logout
+                </Button>
                 {/* </Link> */}
               </MenuItem>
             </Menu>
@@ -126,7 +126,7 @@ Nav.prototypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps,{logout})(withRouter(Nav));
+export default connect(mapStateToProps, { logout })(withRouter(Nav));

@@ -30,24 +30,27 @@ app.use("/api/match", require("./routes/api/match"));
 
 
 io.on("connect", (socket) => {
-  socket.on("join", ({ name, room }, callback) => {
-    const { error, user } = addUser({ id: socket.id, name, room });
+  socket.on("join", ({ userJoined, room }, callback) => {
+    const { error, userAdd } = addUser({ id: socket.id, userJoined, room });
+    // console.log('users: ',getUsersInRoom(user.room))
+    // console.log('room: ',room)
+    // console.log('users in room: ',addUser({ id: socket.id, userJoined, room }))
 
     if (error) return callback(error);
 
-    socket.join(user.room);
+    socket.join(userAdd.room);
 
     socket.emit("message", {
       user: "admin",
-      text: `Welcome ${user.name}, i hope you find a friend.`,
+      text: `Welcome ${userAdd.name}, i hope you find a friend.`,
     });
     socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+      .to(userAdd.room)
+      .emit("message", { user: "admin", text: `${userAdd.name} has joined!` });
 
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
+    io.to(userAdd.room).emit("roomData", {
+      room: userAdd.room,
+      users: getUsersInRoom(userAdd.room),
     });
 
     callback();

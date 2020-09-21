@@ -16,6 +16,7 @@ const ProfileSchema = new Schema({
   },
   bio: {
     type: String,
+    default: ''
   },
   gender: {
     type: String,

@@ -9,6 +9,7 @@
     "cra-template": "1.0.3",
     "moment": "^2.27.0",
     "react": "^16.9.0",
+    "react-countdown-circle-timer": "^2.3.7",
     "react-dom": "^16.9.0",
     "react-emoji": "^0.5.0",
     "react-moment": "^0.9.7",

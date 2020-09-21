@@ -1,26 +1,29 @@
 const users = [];
 
-const addUser = ({ id, name, room }) => {
-  name = name.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+const addUser = ({ id, userJoined, room }) => {
+  const { user, profile } = userJoined;
 
-  const existingUser = users.find((user) => user.room === room && user.name === name);
+  // let name = user.name.trim().toLowerCase();
+  // room = room.trim().toLowerCase();
 
-  if(!name || !room) return { error: 'Username and room are required.' };
-  if(existingUser) return { error: 'Username is taken.' };
+  // const existingUser = users.find(
+  //   (userArr) => userArr.room === room && userArr.name === user.name
+  // );
 
-  const user = { id, name, room };
+  // if (!user.name || !room) return { error: "Username and room are required." };
+  // if (existingUser) return { error: "Username is taken." };
 
-  users.push(user);
+  const userAdd = { id, name: user.name, avatar: user.avatar, room, profile };
+  users.push(userAdd);
 
-  return { user };
-}
+  return { userAdd };
+};
 
 const removeUser = (id) => {
   const index = users.findIndex((user) => user.id === id);
 
-  if(index !== -1) return users.splice(index, 1)[0];
-}
+  if (index !== -1) return users.splice(index, 1)[0];
+};
 
 const getUser = (id) => users.find((user) => user.id === id);
 

@@ -4,15 +4,18 @@ import {
   PARTNER_FINDED,
   PARTNER_DISCONNECTED,
   AVAILABLE_CHAT,
+  TIMES_UP
 } from "../actions/types";
+
 
 const initialState = {
   matchedUser: null,
   loading: true,
   error: {},
   partnerFinded: false,
+  partner: null,
   availableChat: null,
-  canceled: null,
+  canceled: false,
 };
 
 export default function (state = initialState, action) {
@@ -31,11 +34,23 @@ export default function (state = initialState, action) {
         // profiles: payload,
         loading: false,
         canceled: payload,
+        matchedUser: null
+      };
+    case TIMES_UP:
+      return {
+        ...state,
+        // profiles: payload,
+        loading: false,
+        canceled: false,
+        matchedUser: null,
+        partnerFinded:false,
+        partner:null
       };
     case PARTNER_FINDED:
       return {
         ...state,
-        partnerFinded: payload,
+        partnerFinded: payload.hasPartner,
+        partner: payload.partner
       };
     case PARTNER_DISCONNECTED:
       return {
