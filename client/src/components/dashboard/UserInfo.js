@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
@@ -12,6 +12,9 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { timesUp } from "../../actions/match";
+
+import "./Dashboard.css";
+
 const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
@@ -33,9 +36,9 @@ function secondsToHms(d) {
   var m = Math.floor((d % 3600) / 60);
   var s = Math.floor((d % 3600) % 60);
 
-  var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-  var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-  var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+  var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
+  var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
+  var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
   return hDisplay + mDisplay + sDisplay;
 }
 
@@ -47,7 +50,7 @@ const UserInfo = ({
 }) => {
   const classes = useStyles();
   const { user } = userInfo !== null ? userInfo : "";
-
+  const [active, setActive] = useState("me");
   return (
     <Card className={classes.card}>
       <Hidden xsDown>
@@ -89,6 +92,39 @@ const UserInfo = ({
           </div>
         </CardContent>
       </div>
+
+      <section className="forms-section">
+        <div className="forms">
+          <div onClick={() => setActive("me")} className={`form-wrapper ${active === "me" ? "is-active" : ""}`}>
+            <button
+              type="button"
+              onClick={() => setActive("me")}
+              className="switcher switcher-login"
+            >
+              Login
+              <span className="underline"></span>
+            </button>
+            <form className="form form-login">this is me </form>
+          </div>
+          <div
+            className={`form-wrapper ${
+              active === "partner" ? "is-active" : ""
+            }`}
+            onClick={() => setActive("partner")}
+          >
+            <button
+              type="button"
+              onClick={() => setActive("partner")}
+              className="switcher switcher-signup"
+            >
+              Sign Up
+              <span className="underline"></span>
+            </button>
+            <form className="form form-signup">this is my parner</form>
+          </div>
+        </div>
+      </section>
+
       {partner ? (
         <CountdownCircleTimer
           isPlaying

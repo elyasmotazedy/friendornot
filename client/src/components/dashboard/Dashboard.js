@@ -65,41 +65,12 @@ const Dashboard = ({
           <Grid xs={9} item style={{ marginTop: "50px", padding: "0 30px" }}>
             <UserInfo />
             {!match.partnerFinded ? <FindFriend /> : ""}
-            {/* <FindFriend /> */}
-            {/* <CountdownCircleTimer
-              isPlaying
-              duration={10}
-              size={100}
-              strokeWidth={3}
-              strokeLinecap="square"
-              trailColor="#ffe278"
-              colors={[
-                ["#004777", 0.33],
-                ["#F7B801", 0.33],
-                ["#A30000", 0.33],
-              ]}
-              onComplete={() => {
-                // do your stuff here
-                cancelMatch({ user: profile && profile.user._id})
-                console.log('done')
-              }}
-            >
-              {({ remainingTime }) => secondsToHms(remainingTime)}
-            </CountdownCircleTimer> */}
+
             {match.matchedUser !== null && match.matchedUser.room ? (
               <Chat />
             ) : (
               ""
             )}
-            {/* {match.matchedUser !== null && match.matchedUser.room ? (
-              <Chat
-              // room={match.matchedUser.room}
-              // partnerName={user && user.name}
-              // other={match.matchedUser}
-              />
-            ) : (
-              ""
-            )} */}
           </Grid>
           <Premium />
         </Grid>
