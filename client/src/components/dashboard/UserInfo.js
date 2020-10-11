@@ -93,7 +93,7 @@ const UserInfo = ({
         </CardContent>
       </div>
 
-      <section className="forms-section">
+      {/* <section className="forms-section">
         <div className="forms">
           <div onClick={() => setActive("me")} className={`form-wrapper ${active === "me" ? "is-active" : ""}`}>
             <button
@@ -123,7 +123,7 @@ const UserInfo = ({
             <form className="form form-signup">this is my parner</form>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {partner ? (
         <CountdownCircleTimer
