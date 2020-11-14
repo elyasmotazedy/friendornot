@@ -6,7 +6,7 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const { check, validationResult } = require("express-validator");
 
-const matchEventEmitter = Match.watch();
+// const matchEventEmitter = Match.watch();
 
 // @route   POST api/match
 // @des     Create match request
@@ -14,28 +14,43 @@ const matchEventEmitter = Match.watch();
 
 router.post(
   "/",
-  [auth, [check("gender", "Please choose a Gender").not().isEmpty()]],
+  [auth, [check("genderRequest", "Please choose a Gender").not().isEmpty()]],
 
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { gender, room, name, avatar } = req.body;
-    const genderRequest = gender === "female" ? "male" : "female";
+    const { genderRequest, userGender, room, name, avatar } = req.body;
+    let genderSearch = null;
+    // const genderRequest = gender === "female" ? "male" : "female";
+    // console.log('req.body',req.body)
 
     try {
       const userInfo = await Profile.findOne({
         user: req.user.id,
       }).populate("user", ["name", "avatar"]);
-      const genderSearch = await Match.find({
-        gender: genderRequest,
-        available: true,
-      });
+
+      if (userGender === genderRequest) {
+        genderSearch = await Match.find({
+          userGender,
+          genderRequest,
+          available: true,
+        });
+      } else {
+        genderSearch = await Match.find({
+          userGender: userGender === "male" ? "female" : "male",
+          genderRequest: genderRequest === "male" ? "female" : "male",
+          available: true,
+        });
+      }
+
+
+      // check user cant not send request more than one
       const findUserRequest = await Match.findOne({
         "user.id": req.user.id,
       }).select("available");
-      // check user cant not send request more than one
+
       if (findUserRequest && findUserRequest.available === true) {
         return res.json({ msg: "You have sent request already" });
       }
@@ -84,8 +99,9 @@ router.post(
 
       const match = new Match({
         user: { id: req.user.id, name, avatar },
-        gender,
+        genderRequest,
         location: userInfo.location,
+        userGender,
         room,
       });
 
@@ -113,8 +129,8 @@ router.post("/getAvailableChat", auth, async (req, res) => {
   try {
     const availableChat = await await Match.findOne({
       "user.id": req.user.id,
-      available : true
-    })
+      available: true,
+    });
 
     res.json(availableChat);
   } catch (err) {
@@ -129,14 +145,14 @@ router.post("/getAvailableChat", auth, async (req, res) => {
 
 router.post("/cancel", auth, async (req, res) => {
   try {
-     await Match.findOneAndUpdate(
+    await Match.findOneAndUpdate(
       { "user.id": { $in: req.user.id } },
       {
         available: false,
       },
       { new: true }
     );
-    res.json({canceled: true,  msg: "You canceled the request" });
+    res.json({ canceled: true, msg: "You canceled the request" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

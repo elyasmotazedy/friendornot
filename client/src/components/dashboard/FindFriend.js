@@ -37,15 +37,16 @@ const FindFriend = ({
   getAvailableChat,
 }) => {
   const classes = useStyles();
-  const [gender, setFormData] = useState("");
-  const { user } = userInfo !== null ? userInfo : "";
+  const [genderSearch, setFormData] = useState("");
+  const { user, profile } = userInfo !== null ? userInfo : "";
   const requestToChat = () => {
     const id = uuid.v4();
     findPerfectMatch({
-      gender: gender,
+      genderRequest: genderSearch,
       room: id,
       name: user.name,
       avatar: user.avatar,
+      userGender:profile.gender
     });
   };
   useEffect(() => {
@@ -66,18 +67,18 @@ const FindFriend = ({
       <FormControl component="fieldset">
         <FormLabel component="legend">I want to chat with : </FormLabel>
         <RadioGroup
-          aria-label="gender"
-          name="gender"
+          aria-label="genderRequest"
+          name="genderRequest"
           value={
             (match.availableChat !== null && match.availableChat.gender) ||
-            gender
+            genderSearch
           }
           onChange={(e) => onChange(e)}
           style={{ flexDirection: "row" }}
         >
           <FormControlLabel value="female" control={<Radio />} label="Female" />
           <FormControlLabel value="male" control={<Radio />} label="Male" />
-          <FormControlLabel value="both" control={<Radio />} label="Both" />
+          {/* <FormControlLabel value="both" control={<Radio />} label="Both" /> */}
         </RadioGroup>
       </FormControl>
 

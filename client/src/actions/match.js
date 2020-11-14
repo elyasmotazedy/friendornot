@@ -18,7 +18,7 @@ export const findPerfectMatch = (formData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-
+    console.log('formData',formData)
     const res = await axios.post("/api/match", formData, config);
     dispatch({
       type: FIND_MATCH,

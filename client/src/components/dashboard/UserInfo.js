@@ -128,7 +128,7 @@ const UserInfo = ({
       {partner ? (
         <CountdownCircleTimer
           isPlaying
-          duration={300}
+          duration={5}
           size={180}
           strokeWidth={3}
           strokeLinecap="square"
@@ -144,7 +144,7 @@ const UserInfo = ({
         >
           {({ remainingTime }) => secondsToHms(remainingTime)}
         </CountdownCircleTimer>
-      ) : (
+       ) : (
         ""
       )}
     </Card>

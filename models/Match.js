@@ -22,7 +22,11 @@ const MatchSchema = new Schema({
     type: Object,
     required: true,
   },
-  gender: {
+  userGender: {
+    type: String,
+    required: true,
+  },
+  genderRequest: {
     type: String,
     required: true,
   },
