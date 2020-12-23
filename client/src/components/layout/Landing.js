@@ -18,6 +18,7 @@ import PersonPinIcon from "@material-ui/icons/PersonPin";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
 import BGLanding from "../image/landing-image.jpg";
+import { Hidden } from "@material-ui/core";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -110,16 +111,18 @@ const Landing = () => {
   return (
     <Grid container component="main" className={classes.root}>
       {/* <CssBaseline /> */}
-      <Grid item xs={false} sm={5} md={8} className={classes.image}>
-        <Box className={classes.intro}>
-          <Typography variant="h1" component="h2" align="center">
-            FRIEND OR NOT
-          </Typography>
-          <Typography variant="h4" component="h2" align="center">
-            you have to find friend!!
-          </Typography>
-        </Box>
-      </Grid>
+      <Hidden smDown>
+        <Grid item xs={false} sm={5} md={8} className={classes.image}>
+          <Box className={classes.intro}>
+            <Typography variant="h1" component="h2" align="center">
+              FRIEND OR NOT
+            </Typography>
+            <Typography variant="h4" component="h2" align="center">
+              you have to find friend!!
+            </Typography>
+          </Box>
+        </Grid>
+      </Hidden>
       <Grid
         item
         xs={12}
@@ -156,7 +159,7 @@ const Landing = () => {
             </AppBar>
             {/* Alert when error happens */}
             <AlertMsg />
-            <TabPanel  value={value} index={0}>
+            <TabPanel value={value} index={0}>
               <Login />
             </TabPanel>
             <TabPanel value={value} index={1}>

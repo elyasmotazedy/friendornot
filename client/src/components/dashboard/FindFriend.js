@@ -50,7 +50,7 @@ const FindFriend = ({
     });
   };
   useEffect(() => {
-    getAvailableChat();
+    // getAvailableChat();
   }, []);
 
   const cancelChat = () => {

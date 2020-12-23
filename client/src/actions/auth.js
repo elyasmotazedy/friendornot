@@ -45,6 +45,14 @@ export const register = ({
   location,
   gender,
   history,
+  bio,
+  hobbies,
+  website,
+  youtube,
+  twitter,
+  facebook,
+  linkedin,
+  instagram,
 }) => async (dispatch) => {
   const config = {
     headers: {
@@ -61,7 +69,23 @@ export const register = ({
       payload: res.data,
     });
     dispatch(loadUser());
-    dispatch(createProfile({ location, gender }, history));
+    dispatch(
+      createProfile(
+        {
+          location,
+          gender,
+          bio,
+          hobbies,
+          website,
+          youtube,
+          twitter,
+          facebook,
+          linkedin,
+          instagram,
+        },
+        history
+      )
+    );
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -104,6 +128,51 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
+  }
+};
+
+export const forgetPassword = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ email });
+
+  try {
+    const res = await axios.post("/api/auth/forget", body, config);
+    dispatch(setAlert(res.data.msg, "success"))
+    
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
+    }
+
+  }
+};
+
+export const resetPassword = (id,password) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ id,password });
+ 
+  try {
+    const res = await axios.post("/api/auth/reset", body, config);
+    dispatch(setAlert(res.data.msg, "success"))
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "error")));
+    }
+
   }
 };
 

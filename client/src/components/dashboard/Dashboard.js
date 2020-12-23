@@ -1,4 +1,6 @@
 import React, { useEffect, Fragment } from "react";
+
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
@@ -8,10 +10,9 @@ import Premium from "../Premium/Premium";
 import UserInfo from "./UserInfo";
 import FindFriend from "./FindFriend";
 import { getCurrentProfile } from "../../actions/profile";
+import { forgetPassword } from "../../actions/auth";
 import AlertMsg from "../../components/layout/AlertMsg";
-import {
-  cancelMatch
-} from "../../actions/match";
+import { cancelMatch } from "../../actions/match";
 
 import Chat from "../Chat/Chat";
 
@@ -29,24 +30,25 @@ const Dashboard = ({
   cancelMatch,
   profile: { profile, loading },
   match,
+  forgetPassword,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     getCurrentProfile();
+    forgetPassword("motazedie@gmail.com");
   }, []);
 
   function secondsToHms(d) {
     d = Number(d);
     var h = Math.floor(d / 3600);
-    var m = Math.floor(d % 3600 / 60);
-    var s = Math.floor(d % 3600 % 60);
+    var m = Math.floor((d % 3600) / 60);
+    var s = Math.floor((d % 3600) % 60);
 
     var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    return hDisplay + mDisplay + sDisplay; 
-}
-
+    return hDisplay + mDisplay + sDisplay;
+  }
 
   // console.log(match)
   return loading && profile === null ? (
@@ -94,5 +96,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getCurrentProfile,
-  cancelMatch
+  cancelMatch,
+  forgetPassword,
 })(Dashboard);

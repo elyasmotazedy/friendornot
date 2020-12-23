@@ -8,8 +8,9 @@ import Landing from "./components/layout/Landing";
 import Dashboard from "./components/dashboard/Dashboard";
 import Profile from "./components/profile/Profile";
 import Chat from "./components/Chat/Chat";
+import Forget from "./components/Forget/Forget";
 import Join from "./components/Join/Join";
-
+import Reset from "./components/auth/Reset";
 import CreateProfile from "./components/profile-form/CreateProfile";
 import EditProfile from "./components/profile-form/EditProfile";
 import { loadUser } from "./actions/auth";
@@ -36,6 +37,8 @@ const App = () => {
             {/* <Route exact path="/profile/:id" component={profile} /> */}
             {/* <PrivteRoute exact path="/dashboard" component={Dashboard} /> */}
             <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/forget" component={Forget} />
+            <Route exact path="/reset/:id" component={Reset} />
             <PrivteRoute path="/chat" exact component={Chat} />
             {/* <PrivteRoute path="/chat2" exact component={Chat2} /> */}
 
