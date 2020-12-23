@@ -128,7 +128,7 @@ const UserInfo = ({
       {partner ? (
         <CountdownCircleTimer
           isPlaying
-          duration={300}
+          duration={3000}
           size={180}
           strokeWidth={3}
           strokeLinecap="square"

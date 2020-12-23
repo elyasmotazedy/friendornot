@@ -169,9 +169,8 @@
 .form {
 	overflow: hidden;
 	min-width: 260px;
-	margin-top: 50px;
-	padding: 30px 25px;
-  border-radius: 5px;
+	/* margin-top: 50px; */
+	padding: 25px 20px;
 	transform-origin: top;
 }
 

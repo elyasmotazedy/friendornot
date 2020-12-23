@@ -1,5 +1,5 @@
 import React from 'react';
-
+import SendIcon from '@material-ui/icons/Send';
 import './Input.css';
 
 const Input = ({ setMessage, sendMessage, message }) => (
@@ -12,7 +12,8 @@ const Input = ({ setMessage, sendMessage, message }) => (
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
     />
-    <button className="sendButton" onClick={e => sendMessage(e)}>Send</button>
+    <SendIcon className="sendButton" onClick={e => sendMessage(e)}/>
+    {/* <button className="sendButton" onClick={e => sendMessage(e)}>Send</button> */}
   </form>
 )
 

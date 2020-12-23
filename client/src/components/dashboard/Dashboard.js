@@ -21,7 +21,11 @@ import Grid from "@material-ui/core/Grid";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import { useTimer } from 'react-timer-hook';
+
 import "./Dashboard.css";
+
+
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -38,19 +42,10 @@ const Dashboard = ({
     forgetPassword("motazedie@gmail.com");
   }, []);
 
-  function secondsToHms(d) {
-    d = Number(d);
-    var h = Math.floor(d / 3600);
-    var m = Math.floor((d % 3600) / 60);
-    var s = Math.floor((d % 3600) % 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    return hDisplay + mDisplay + sDisplay;
-  }
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
 
-  // console.log(match)
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -62,9 +57,10 @@ const Dashboard = ({
         <Grid container justify="center">
           <Grid xs={12} item>
             <AlertMsg />
+            <useTimer expiryTimestamp={time}  />
           </Grid>
 
-          <Grid xs={9} item style={{ marginTop: "50px", padding: "0 30px" }}>
+          <Grid xs={12} sm={8} item style={{ marginTop: "50px"}}>
             <UserInfo />
             {!match.partnerFinded ? <FindFriend /> : ""}
 
@@ -74,7 +70,7 @@ const Dashboard = ({
               ""
             )}
           </Grid>
-          <Premium />
+          {/* <Premium /> */}
         </Grid>
       </Container>
     </Fragment>
