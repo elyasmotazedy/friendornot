@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -12,7 +12,6 @@ import AlertMsg from "../../components/layout/AlertMsg";
 import { cancelMatch } from "../../actions/match";
 
 import Chat from "../Chat/Chat";
-
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
@@ -35,13 +34,14 @@ const Dashboard = ({
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
 
+
+
   return loading && profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <Grid xs={12} item>
         <Nav />
-        
       </Grid>
       <Container>
         <Grid container justify="center">

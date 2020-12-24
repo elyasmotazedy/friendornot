@@ -124,7 +124,7 @@ const Chat = ({
             <a href="/">{/* <img src={closeIcon} alt="close icon" /> */}</a>
             <CountdownCircleTimer
               isPlaying
-              duration={300}
+              duration={3000}
               size={60}
               strokeWidth={4}
               strokeLinecap="square"
