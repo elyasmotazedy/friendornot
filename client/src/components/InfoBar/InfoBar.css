@@ -4,12 +4,13 @@
   justify-content: space-between;
   background: #2979FF;
   border-radius: 4px 4px 0 0;
-  height: 60px;
+  /* height: 60px; */
   width: 100%;
+  padding: 10px 0;
 }
 
 .leftInnerContainer {
-  flex: 0.5;
+  flex: 1;
   display: flex;
   align-items: center;
   margin-left: 5%;

@@ -1,13 +1,32 @@
 .messages {
-  padding: 5% 0;
+  padding: 0 0 5px 0;
   overflow: auto;
   flex: auto;
   max-height: 400px;
   min-height: 400px;
-  background: url('https://source.unsplash.com/random');
+  background: url("https://source.unsplash.com/random");
   background-repeat: repeat;
   background-size: auto;
   /* background-attachment: fixed; */
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+
+.css-1qyrjaz {
+  background-color: #224768;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  bottom: 20px;
+  right:35px
+}
+.css-1qyrjaz::after {
+  content: '';
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+

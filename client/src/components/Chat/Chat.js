@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { timesUp } from "../../actions/match";
 import {
   partnerFinder,
   partnerDisconnected,
@@ -16,11 +18,29 @@ import "./Chat.css";
 
 let socket;
 
+function secondsToHms(d) {
+  d = Number(d);
+  var h = Math.floor(d / 3600);
+  var m = Math.floor((d % 3600) / 60);
+  var s = Math.floor((d % 3600) % 60);
+
+  var hDisplay = h > 0 ? h + (h === 1 ? " h" : "h") : "";
+  var mDisplay = m > 0 ? m + (m === 1 ? "m" : "m") : "";
+  var sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : "";
+
+  if(mDisplay){
+    return <strong>{mDisplay}</strong>;
+  }
+  return <strong>{sDisplay}</strong>
+}
+
+
 const Chat = ({
   match: { matchedUser },
   auth: { userInfo },
   partnerFinder,
   partnerDisconnected,
+  timesUp,
 }) => {
   // const { user } = userInfo !== null ? userInfo : "";
   // const [name, setName] = useState(partnerName);
@@ -28,7 +48,7 @@ const Chat = ({
   const [userJoined, setUserJoined] = useState(
     userInfo !== null ? userInfo : ""
   );
-  console.log('userInfo',userInfo)
+
   // const [room, setRoom] = useState('');
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
@@ -63,9 +83,9 @@ const Chat = ({
         const partner = users.find(
           (user) => user.profile._id !== userInfo.profile._id
         );
-        partnerFinder(true,partner);
+        partnerFinder(true, partner);
       } else {
-        partnerFinder(false,null);
+        partnerFinder(false, null);
       }
     });
 
@@ -102,6 +122,24 @@ const Chat = ({
           </div>
           <div className="rightInnerContainer">
             <a href="/">{/* <img src={closeIcon} alt="close icon" /> */}</a>
+            <CountdownCircleTimer
+              isPlaying
+              duration={300}
+              size={60}
+              strokeWidth={4}
+              strokeLinecap="square"
+              trailColor="#fff"
+              colors={[
+                ["#004d40", 1],
+                ["#ff6d00", 1],
+                ["#b71c1c", 1],
+              ]}
+              onComplete={() => {
+                timesUp();
+              }}
+            >
+              {({ remainingTime }) => secondsToHms(remainingTime) }
+            </CountdownCircleTimer>
           </div>
         </div>
         <Messages messages={messages} name={userJoined.user.name} />
@@ -133,9 +171,11 @@ const mapStateToProps = (state) => ({
   findPerfectMatch: PropTypes.func.isRequired,
   cancelMatch: PropTypes.func.isRequired,
   match: state.match,
+  timesUp: PropTypes.func.isRequired,
 });
 
 export default connect(mapStateToProps, {
   partnerFinder,
   partnerDisconnected,
+  timesUp
 })(Chat);

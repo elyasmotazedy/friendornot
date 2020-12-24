@@ -29,6 +29,7 @@
     "mongoose": "^5.9.25",
     "nodemailer": "^6.4.17",
     "nodemailer-smtp-transport": "^2.7.4",
+    "react-countdown-clock-timer": "^2.1.2",
     "react-timer-hook": "^2.0.6",
     "socket.io": "^2.3.0",
     "uuid": "^8.3.0"

@@ -11,7 +11,7 @@ import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { timesUp } from "../../actions/match";
+
 
 import "./Dashboard.css";
 
@@ -30,36 +30,26 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
-function secondsToHms(d) {
-  d = Number(d);
-  var h = Math.floor(d / 3600);
-  var m = Math.floor((d % 3600) / 60);
-  var s = Math.floor((d % 3600) % 60);
 
-  var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
-  var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
-  var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
-  return hDisplay + mDisplay + sDisplay;
-}
+
 
 const UserInfo = ({
   auth: { userInfo },
   profile: { profile, loading },
   match: { partner, matchedUser },
-  timesUp,
 }) => {
   const classes = useStyles();
   const { user } = userInfo !== null ? userInfo : "";
   const [active, setActive] = useState("me");
   return (
     <Card className={classes.card}>
-      <Hidden xsDown>
+      <div>
         <Avatar
           alt={(partner && partner.name) || (user && user.name)}
           src={(partner && partner.avatar) || (user && user.avatar)}
           className={classes.mainAvatar}
         />
-      </Hidden>
+      </div>
       <div className={classes.cardDetails}>
         <CardContent>
           <Typography component="h2" variant="h5">
@@ -125,36 +115,13 @@ const UserInfo = ({
         </div>
       </section> */}
 
-      {partner ? (
-        <CountdownCircleTimer
-          isPlaying
-          duration={3000}
-          size={180}
-          strokeWidth={3}
-          strokeLinecap="square"
-          trailColor="#ffe278"
-          colors={[
-            ["#004777", 0.33],
-            ["#F7B801", 0.33],
-            ["#A30000", 0.33],
-          ]}
-          onComplete={() => {
-            timesUp();
-          }}
-        >
-          {({ remainingTime }) => secondsToHms(remainingTime)}
-        </CountdownCircleTimer>
-       ) : (
-        ""
-      )}
     </Card>
   );
 };
 
 UserInfo.prototypes = {
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  timesUp: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -163,4 +130,4 @@ const mapStateToProps = (state) => ({
   match: state.match,
 });
 
-export default connect(mapStateToProps, { timesUp })(UserInfo);
+export default connect(mapStateToProps)(UserInfo);

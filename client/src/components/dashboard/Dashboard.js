@@ -1,16 +1,13 @@
 import React, { useEffect, Fragment } from "react";
 
-
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import Spinner from "../../components/layout/Spinner";
 import Nav from "../Nav/Nav";
 import Premium from "../Premium/Premium";
 import UserInfo from "./UserInfo";
 import FindFriend from "./FindFriend";
 import { getCurrentProfile } from "../../actions/profile";
-import { forgetPassword } from "../../actions/auth";
 import AlertMsg from "../../components/layout/AlertMsg";
 import { cancelMatch } from "../../actions/match";
 
@@ -21,27 +18,19 @@ import Grid from "@material-ui/core/Grid";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import { useTimer } from 'react-timer-hook';
-
 import "./Dashboard.css";
 
-
-
 const useStyles = makeStyles((theme) => ({}));
-
 const Dashboard = ({
   getCurrentProfile,
   cancelMatch,
   profile: { profile, loading },
   match,
-  forgetPassword,
 }) => {
   const classes = useStyles();
   useEffect(() => {
     getCurrentProfile();
-    forgetPassword("motazedie@gmail.com");
   }, []);
-
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
@@ -52,18 +41,17 @@ const Dashboard = ({
     <Fragment>
       <Grid xs={12} item>
         <Nav />
+        
       </Grid>
       <Container>
         <Grid container justify="center">
           <Grid xs={12} item>
             <AlertMsg />
-            <useTimer expiryTimestamp={time}  />
           </Grid>
 
-          <Grid xs={12} sm={8} item style={{ marginTop: "50px"}}>
+          <Grid xs={12} sm={8} item style={{ marginTop: "50px" }}>
             <UserInfo />
             {!match.partnerFinded ? <FindFriend /> : ""}
-
             {match.matchedUser !== null && match.matchedUser.room ? (
               <Chat />
             ) : (
@@ -93,5 +81,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getCurrentProfile,
   cancelMatch,
-  forgetPassword,
 })(Dashboard);
