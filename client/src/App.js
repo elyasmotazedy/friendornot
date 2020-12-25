@@ -36,12 +36,13 @@ const App = () => {
           <Switch>
             {/* <Route exact path="/profile/:id" component={profile} /> */}
             {/* <PrivteRoute exact path="/dashboard" component={Dashboard} /> */}
-            <Route exact path="/dashboard" component={Dashboard} />
+            {/* <Route exact path="/dashboard" component={Dashboard} /> */}
             <Route exact path="/forget" component={Forget} />
             <Route exact path="/reset/:id" component={Reset} />
             <PrivteRoute path="/chat" exact component={Chat} />
             {/* <PrivteRoute path="/chat2" exact component={Chat2} /> */}
 
+            <PrivteRoute exact path="/dashboard" component={Dashboard} />
             <PrivteRoute
               exact
               path="/create-profile"

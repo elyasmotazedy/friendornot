@@ -473,13 +473,6 @@ const Register = ({
   );
 };
 
-const top100Films = [
-  "The Shawshank Redemption",
-  "The Godfather",
-  "The Godfather: Part II",
-  "The Dark Knight",
-  "12 Angry Men",
-];
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
