@@ -288,6 +288,8 @@ const Register = ({
             value={bio}
             onChange={(e) => onChange(e)}
             fullWidth
+            inputProps={{ maxLength: 200 }}
+            helperText={`${bio.length} / 200`}
           />
         </Grid>
         <Grid item xs={12}>

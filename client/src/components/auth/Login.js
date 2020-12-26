@@ -70,7 +70,7 @@ const Login = ({ login, isAuthenticated, forgetPassword }) => {
   };
 
   const handleForgetPassword = () => {
-    forgetPassword(forgetEmail)
+    forgetPassword(forgetEmail);
     // setOpen(false)
   };
 
@@ -165,7 +165,7 @@ const Login = ({ login, isAuthenticated, forgetPassword }) => {
           <DialogTitle id="form-dialog-title">Forget password</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <AlertMsg/>
+              <AlertMsg />
             </DialogContentText>
             <TextField
               autoFocus
@@ -190,6 +190,7 @@ const Login = ({ login, isAuthenticated, forgetPassword }) => {
     </Container>
   );
 };
+
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,

@@ -106,17 +106,35 @@ router.post("/forget", async (req, res) => {
         resetPasswordExpires: Date.now() + 3600000,
       }
     );
-    await nodemailerWrapper(token, req.body.email, res);
+    await nodemailerWrapper(token, req.body.email, res,req);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
 
-async function nodemailerWrapper(token, email, res) {
+async function nodemailerWrapper(token, email, res ,req) {
   const output = `
-  <h3>For changing your password click link below</h3>
-  <a herf="http://localhost:3000/reset/${token}" >http://localhost:3000/reset/${token}</a>
+  <div>
+  <h1 style="text-align: center">Forget Password</h1>
+  <p>Hello,</p>
+  <p>
+    We've received a request to reset the password for the your account.
+    No changes have been made to your account yet. You can reset your
+    password by clicking the link below
+  </p>
+  <a style="color : blue" target="_blank" herf="http://${req.headers.host}/reset/${token}">
+    Rest Your Password
+  </a>
+  <br/>
+  <br/>
+  <strong>
+    Note : If you did not request a new password, please let us know immediately
+    by replying to this email.
+  </strong>
+  <p>Sincerely, </p>
+  <strong>The Friendornot Team</strong>
+</div>
 `;
 
   // create reusable transporter object using the default SMTP transport
@@ -131,9 +149,9 @@ async function nodemailerWrapper(token, email, res) {
         pass: "Ely@s1374", // generated ethereal password
       },
       sendmail: true,
-      tls: {
-        rejectUnauthorized: false,
-      },
+      // tls: {
+      //   rejectUnauthorized: false,
+      // },
     })
   );
 

@@ -34,8 +34,6 @@ const Dashboard = ({
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
 
-
-
   return loading && profile === null ? (
     <Spinner />
   ) : (
@@ -45,7 +43,7 @@ const Dashboard = ({
       </Grid>
       <Container>
         <Grid container justify="center">
-          <Grid xs={12} item>
+          <Grid xs={12} sm={8} item style={{ marginTop: "10px" }}>
             <AlertMsg />
           </Grid>
 
