@@ -149,9 +149,9 @@ async function nodemailerWrapper(token, email, res ,req) {
         pass: "Ely@s1374", // generated ethereal password
       },
       sendmail: true,
-      // tls: {
-      //   rejectUnauthorized: false,
-      // },
+      tls: {
+        rejectUnauthorized: true,
+      },
     })
   );
 
