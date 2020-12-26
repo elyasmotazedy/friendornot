@@ -150,7 +150,7 @@ async function nodemailerWrapper(token, email, res ,req) {
       },
       sendmail: true,
       tls: {
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
     })
   );
