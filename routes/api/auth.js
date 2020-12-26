@@ -123,7 +123,7 @@ async function nodemailerWrapper(token, email, res ,req) {
     No changes have been made to your account yet. You can reset your
     password by clicking the link below
   </p>
-  <a style="color : blue" target="_blank" herf="http://${req.headers.host}/reset/${token}">
+  <a style="color : blue" target="_blank" href="http://${req.headers.host}/reset/${token}">
     Rest Your Password
   </a>
   <br/>
