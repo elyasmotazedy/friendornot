@@ -126,6 +126,7 @@ async function nodemailerWrapper(token, email, res ,req) {
   <a style="color : blue" target="_blank" href="http://${req.headers.host}/reset/${token}">
     Rest Your Password
   </a>
+  <p>This link will expire in hour after this email was sent.</p>
   <br/>
   <br/>
   <strong>

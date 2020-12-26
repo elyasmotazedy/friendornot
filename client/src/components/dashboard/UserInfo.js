@@ -12,7 +12,6 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-
 import "./Dashboard.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,18 +19,33 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     boxShadow: "none",
     padding: "20px",
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+    },
   },
 
   mainAvatar: {
     width: "150px",
     height: "150px",
+    [theme.breakpoints.down("sm")]: {
+      margin: "auto",
+  
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100px",
+      height: "100px",
+    },
   },
   cardDetails: {
     flex: 1,
   },
+  nameAndLocation: {
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+      marginBottom: "10px",
+    },
+  },
 }));
-
-
 
 const UserInfo = ({
   auth: { userInfo },
@@ -52,14 +66,16 @@ const UserInfo = ({
       </div>
       <div className={classes.cardDetails}>
         <CardContent>
-          <Typography component="h2" variant="h5">
-            {(partner && partner.name) || (user && user.name)}
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            {(partner && partner.profile.location.label) ||
-              (profile && profile.location.label)}
-          </Typography>
-          <Typography variant="subtitle1" paragraph>
+          <div className={classes.nameAndLocation}>
+            <Typography style={{textTransform : 'capitalize'}} component="h2" variant="h5">
+              {(partner && partner.name) || (user && user.name)}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+              {(partner && partner.profile.location.label) ||
+                (profile && profile.location.label)}
+            </Typography>
+          </div>
+          <Typography variant="subtitle1" paragraph align="justify">
             {(partner && partner.profile.bio) || (profile && profile.bio)}
           </Typography>
           <div>
@@ -114,14 +130,13 @@ const UserInfo = ({
           </div>
         </div>
       </section> */}
-
     </Card>
   );
 };
 
 UserInfo.prototypes = {
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

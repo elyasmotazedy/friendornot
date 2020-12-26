@@ -47,7 +47,7 @@ const Dashboard = ({
             <AlertMsg />
           </Grid>
 
-          <Grid xs={12} sm={8} item style={{ marginTop: "50px" }}>
+          <Grid xs={12} sm={12} md={8} item style={{ marginTop: "50px" }}>
             <UserInfo />
             {!match.partnerFinded ? <FindFriend /> : ""}
             {match.matchedUser !== null && match.matchedUser.room ? (
