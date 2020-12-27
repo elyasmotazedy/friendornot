@@ -54,8 +54,8 @@ const Chat = ({
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [partner, setPartner] = useState("");
-  const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
-  // const ENDPOINT = "http://localhost:5000/";
+  // const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
+  const ENDPOINT = "http://localhost:5000/";
 
   useEffect(() => {
     socket = io(ENDPOINT);

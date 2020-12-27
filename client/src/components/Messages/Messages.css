@@ -4,8 +4,8 @@
   flex: auto;
   max-height: 400px;
   min-height: 400px;
-  background: '#d0d4d7';
-  background: url("https://source.unsplash.com/random");
+  background-color: #d0d4d7;
+  background-image: url("https://source.unsplash.com/random") ;
   background-repeat: repeat;
   background-size: auto;
   /* background-attachment: fixed; */
