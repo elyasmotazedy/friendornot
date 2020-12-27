@@ -54,14 +54,14 @@ const useStyles = makeStyles((theme) => ({
   step: {
     // display: "flex",
     // justifyContent: "end",
-    marginTop: '10px'
+    marginTop: "10px",
   },
   stepTwo: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: '10px'
-
+    marginTop: "10px",
   },
+
 }));
 
 const Register = ({
@@ -91,7 +91,7 @@ const Register = ({
     instagram: "",
   });
 
-  const [nextStep, setNextStep] = useState(1);
+  const [nextStep, setNextStep] = useState(2);
 
   const {
     name,
@@ -295,11 +295,13 @@ const Register = ({
         <Grid item xs={12}>
           <Autocomplete
             multiple
-            id="tags-filled"
+            id="Hobbies"
+            className={classes.hobbies}
             options={[]}
             onChange={(e, newValue) => {
               setFormData({ ...formData, hobbies: newValue });
             }}
+            limitTags={5}
             // defaultValue={[top100Films[13].title]}
             freeSolo
             renderTags={(value, getTagProps) =>
@@ -311,15 +313,18 @@ const Register = ({
                 />
               ))
             }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Hobbies"
-                placeholder="Favorites"
-                helperText="You can have multiple hobbies, after wrting seprate with enter"
-              />
-            )}
+            renderInput={(params) => {
+              return (
+                <TextField
+                  id="angholi"
+                  {...params}
+                  variant="outlined"
+                  label="Hobbies"
+                  placeholder="Hobbies"
+                  helperText="You can have multiple hobbies, after wrting seprate with enter"
+                />
+              );
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -412,6 +417,7 @@ const Register = ({
     );
   };
 
+  console.log(formData.hobbies);
   return (
     <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}
@@ -474,7 +480,6 @@ const Register = ({
     </Container>
   );
 };
-
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,

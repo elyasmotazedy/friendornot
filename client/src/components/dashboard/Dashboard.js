@@ -50,6 +50,7 @@ const Dashboard = ({
           <Grid xs={12} sm={12} md={8} item style={{ marginTop: "50px" }}>
             <UserInfo />
             {!match.partnerFinded ? <FindFriend /> : ""}
+            <br/>
             {match.matchedUser !== null && match.matchedUser.room ? (
               <Chat />
             ) : (

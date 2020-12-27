@@ -15,6 +15,10 @@ const Input = ({ setMessage, sendMessage, message }) => {
   const handleMsg = (e) => {
     setMessage(e.target.value);
   };
+  const handleSendMsg = (e) => {
+    sendMessage(e)
+    setOpenEmoji(false);
+  }
 
   return (
     <form className="form">
@@ -39,12 +43,12 @@ const Input = ({ setMessage, sendMessage, message }) => {
           onSelect={(emoji) => setMessage(message + emoji.native)}
           showPreview={false}
           showSkinTones={false}
-          style={{ position: "absolute", bottom: "75px", right: "20px" }}
+          style={{ position: "absolute", bottom: "75px", maxWidth:'100%', right: '0'}}
         />
       ) : (
         ""
       )}
-      <SendIcon className="sendButton" onClick={(e) => sendMessage(e)} />
+      <SendIcon className="sendButton" onClick={ (e)=> handleSendMsg(e)} />
       {/* <button className="sendButton" onClick={e => sendMessage(e)}>Send</button> */}
     </form>
   );

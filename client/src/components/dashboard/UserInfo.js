@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: "10px",
     },
   },
+  chips: {
+    [theme.breakpoints.down("sm")]: {
+      display:'flex',
+      overflow: 'auto'
+    },
+  },
 }));
 
 const UserInfo = ({
@@ -78,7 +84,7 @@ const UserInfo = ({
           <Typography variant="subtitle1" paragraph align="justify">
             {(partner && partner.profile.bio) || (profile && profile.bio)}
           </Typography>
-          <div>
+          <div className={classes.chips}>
             {(partner &&
               partner.profile.hobbies.map((item) => (
                 <Chip

@@ -18,7 +18,6 @@ export const findPerfectMatch = (formData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    console.log('formData',formData)
     const res = await axios.post("/api/match", formData, config);
     dispatch({
       type: FIND_MATCH,
@@ -97,7 +96,7 @@ export const cancelMatch = (userId) => async (dispatch) => {
       type: CANCEL_MATCH,
       payload: res.data,
     });
-    dispatch(setAlert(res.data.msg, "error"))
+    // dispatch(setAlert(res.data.msg, "warning"))
   } catch (err) {
     const errors = err.response.data.errors;
     // if (errors) {

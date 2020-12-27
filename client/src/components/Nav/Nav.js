@@ -68,7 +68,7 @@ const Nav = ({ auth: { userInfo }, logout, history }) => {
             />
           </Box>
           <Typography variant="h6" className={classes.title}>
-            Dashboard - Welcome {user && user.name}
+            Welcome {user && user.name}
           </Typography>
 
           <div>
