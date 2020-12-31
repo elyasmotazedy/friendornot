@@ -6,14 +6,29 @@ import Message from "./Message/Message";
 
 import "./Messages.css";
 
-const Messages = ({ messages, name }) => (
-  <ScrollToBottom className="messages">
-    {messages.map((message, i) => (
-      <div key={i}>
-        <Message message={message} name={name} />
-      </div>
-    ))}
-  </ScrollToBottom>
-);
+const Messages = ({ messages, name, typeing, users }) => {
+  return (
+    <ScrollToBottom className="messages">
+      {messages.map((message, i) => (
+        <div key={i}>
+          <Message message={message} name={name} />
+        </div>
+      ))}
+
+      {typeing && typeing.text !== "" ? (
+        <div class="chat-bubble">
+          <span>{typeing.user} is typing</span>
+          <div class="typing">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </ScrollToBottom>
+  );
+};
 
 export default Messages;

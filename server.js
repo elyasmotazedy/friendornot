@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 
 //socket.io
 const http = require("http");
@@ -28,7 +28,6 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
 app.use("/api/match", require("./routes/api/match"));
 
-
 io.on("connect", (socket) => {
   socket.on("join", ({ userJoined, room }, callback) => {
     const { error, userAdd } = addUser({ id: socket.id, userJoined, room });
@@ -42,11 +41,11 @@ io.on("connect", (socket) => {
 
     socket.emit("message", {
       user: "admin",
-      text: `Welcome ${userAdd.name}, i hope you find a friend.`,
+      text: `Welcome ${userAdd.name}, i hope you find a friend. You have 5 min to chat.`,
     });
-    socket.broadcast
-      .to(userAdd.room)
-      .emit("message", { user: "admin", text: `${userAdd.name} has joined!` });
+    // socket.broadcast
+    //   .to(userAdd.room)
+    //   .emit("message", { user: "admin", text: `${userAdd.name} has joined!` });
 
     io.to(userAdd.room).emit("roomData", {
       room: userAdd.room,
@@ -58,10 +57,28 @@ io.on("connect", (socket) => {
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-
     io.to(user.room).emit("message", { user: user.name, text: message });
 
     callback();
+  });
+
+  socket.on("typing", (message, callback) => {
+    const user = getUser(socket.id);
+    console.log(message);
+    if (message.value !== "") {
+      socket.broadcast.to(user.room).emit("isTyping", {
+        id: user.profile._id,
+        user: user.name,
+      });
+    } else {
+      socket.broadcast.to(user.room).emit("isTyping", {
+        id: user.profile._id,
+        user: user.name,
+        text: "",
+      });
+    }
+
+    // callback();
   });
 
   socket.on("disconnect", () => {
@@ -81,14 +98,13 @@ io.on("connect", (socket) => {
 });
 
 //Serve static assets in production
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === "production") {
   //Set static folder
-  app.use(express.static('client/build'));
-  app.get('*', (req,res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  })
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
-
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));

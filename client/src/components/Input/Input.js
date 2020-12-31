@@ -5,7 +5,7 @@ import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import "./Input.css";
 
-const Input = ({ setMessage, sendMessage, message }) => {
+const Input = ({ setMessage, sendMessage, message ,handletyping}) => {
   const [openEmoji, setOpenEmoji] = useState(false);
   const [emojis, seteEmoji] = useState("");
 
@@ -14,10 +14,12 @@ const Input = ({ setMessage, sendMessage, message }) => {
   };
   const handleMsg = (e) => {
     setMessage(e.target.value);
+    handletyping(e.target.value)
   };
   const handleSendMsg = (e) => {
     sendMessage(e)
     setOpenEmoji(false);
+   
   }
 
   return (
@@ -29,7 +31,7 @@ const Input = ({ setMessage, sendMessage, message }) => {
         value={message}
         onChange={(e) => handleMsg(e)}
         onKeyPress={(event) =>
-          event.key === "Enter" ? sendMessage(event) : null
+          event.key === "Enter" ? sendMessage(event) : ''
         }
         onFocus={() => setOpenEmoji(false)}
       />

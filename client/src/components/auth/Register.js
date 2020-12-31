@@ -91,7 +91,7 @@ const Register = ({
     instagram: "",
   });
 
-  const [nextStep, setNextStep] = useState(2);
+  const [nextStep, setNextStep] = useState(1);
 
   const {
     name,

@@ -5,11 +5,11 @@
   max-height: 400px;
   min-height: 400px;
   background-color: #d0d4d7;
-  background-image: url("https://source.unsplash.com/random") ;
+  background-image: url("https://source.unsplash.com/random");
   background-repeat: repeat;
   background-size: auto;
   /* background-attachment: fixed; */
-  background-size: 'cover';
+  background-size: "cover";
   background-repeat: no-repeat;
 }
 
@@ -19,10 +19,10 @@
   height: 30px;
   border-radius: 50%;
   bottom: 20px;
-  right:35px
+  right: 35px;
 }
 .css-1qyrjaz::after {
-  content: '';
+  content: "";
   border: solid #fff;
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -31,3 +31,53 @@
   -webkit-transform: rotate(45deg);
 }
 
+/* is typing */
+
+.chat-bubble {
+  display: inline-flex;
+  margin: 10px 5%;
+  padding: 5px 10px;
+}
+.chat-bubble span {
+  color: #397962;
+}
+.typing {
+  margin-left: 5px;
+}
+.typing .dot {
+  animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+  background-color: #397962;
+  border-radius: 50%;
+  height: 4px;
+  margin-right: 4px;
+  vertical-align: middle;
+  width: 4px;
+  display: inline-block;
+}
+.typing .dot:nth-child(1) {
+  animation-delay: 200ms;
+}
+.typing .dot:nth-child(2) {
+  animation-delay: 300ms;
+}
+.typing .dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+.typing .dot:last-child {
+  margin-right: 0;
+}
+
+@keyframes mercuryTypingAnimation {
+  0% {
+    transform: translateY(0px);
+    /* background-color: #6cad96; */
+  }
+  28% {
+    transform: translateY(-7px);
+    /* background-color: #9ecab9; */
+  }
+  44% {
+    transform: translateY(0px);
+    /* background-color: #b5d9cb; */
+  }
+}

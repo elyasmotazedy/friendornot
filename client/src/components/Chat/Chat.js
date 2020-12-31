@@ -28,12 +28,11 @@ function secondsToHms(d) {
   var mDisplay = m > 0 ? m + (m === 1 ? "m" : "m") : "";
   var sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : "";
 
-  if(mDisplay){
+  if (mDisplay) {
     return <strong>{mDisplay}</strong>;
   }
-  return <strong>{sDisplay}</strong>
+  return <strong>{sDisplay}</strong>;
 }
-
 
 const Chat = ({
   match: { matchedUser },
@@ -53,6 +52,7 @@ const Chat = ({
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [typeing, setTyping] = useState(null);
   const [partner, setPartner] = useState("");
   const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
   // const ENDPOINT = "http://localhost:5000/";
@@ -89,19 +89,33 @@ const Chat = ({
       }
     });
 
+    socket.on("isTyping", (message) => {
+      setTyping(message);
+    });
+
     // socket.on('connect', () => {
     //   console.log(socket.disconnected); // false
     // });
   }, []);
 
+  const handletyping = (value) => {
+    // if(value !== ''){
+    socket.emit("typing", { value });
+    // }
+  };
+
+  const handleDoneTyping = () => {
+    setMessage("");
+    handletyping('')
+  };
   const sendMessage = (event) => {
     event.preventDefault();
 
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      socket.emit("sendMessage", message, () => handleDoneTyping());
     }
   };
-
+  // console.log('matchedUser', users )
   return users.length === 2 ? (
     <div className="outerContainer">
       <div className="container">
@@ -138,15 +152,25 @@ const Chat = ({
                 timesUp();
               }}
             >
-              {({ remainingTime }) => secondsToHms(remainingTime) }
+              {({ remainingTime }) => secondsToHms(remainingTime)}
             </CountdownCircleTimer>
           </div>
         </div>
-        <Messages messages={messages} name={userJoined.user.name} />
+        <Messages
+          messages={messages}
+          name={userJoined.user.name}
+          typeing={typeing}
+          profileID={userInfo.profile._id}
+          PartnerProfileID={users[1].profile._id}
+          users={users}
+
+          
+        />
         <Input
           message={message}
           setMessage={setMessage}
           sendMessage={sendMessage}
+          handletyping={handletyping}
         />
       </div>
     </div>
@@ -177,5 +201,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   partnerFinder,
   partnerDisconnected,
-  timesUp
+  timesUp,
 })(Chat);
