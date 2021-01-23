@@ -5,12 +5,16 @@ import xImage from "./images/x.png";
 import oImage from "./images/o.png";
 import { resetGameState, createNewGame } from "../../actions/ticTacToe";
 import PieceChooser from "./PieceChooser";
+
+
 import "./ticTacToe.css";
 
 export class Game extends Component {
+  
   constructor(props) {
     super(props);
     this.timeout = null;
+
   }
 
   resetGame() {
@@ -27,6 +31,7 @@ export class Game extends Component {
   }
 
   openSettings() {}
+
 
   render() {
     return (

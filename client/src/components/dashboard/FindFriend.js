@@ -19,6 +19,8 @@ import Button from "@material-ui/core/Button";
 import SearchIcon from "@material-ui/icons/Search";
 
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 //game
 import Game from "../../game/ticTacToe/Game";
@@ -40,6 +42,9 @@ const FindFriend = ({
   getAvailableChat,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [genderSearch, setFormData] = useState("");
   const { user, profile } = userInfo !== null ? userInfo : "";
   const requestToChat = () => {
@@ -66,15 +71,8 @@ const FindFriend = ({
 
   return (
     <Grid container xs={12} item align="center" className={classes.findGender}>
-      {match.availableChat !== null ||
-      (match.matchedUser !== null && match.matchedUser.room) ? (
-        <Grid xs={12}>
-          <Game />
-        </Grid>
-      ) : (
-        ""
-      )}
-      <Grid xs={12}>
+      <Grid xs={12} sm={7} md={ match.availableChat !== null ||
+          (match.matchedUser !== null && match.matchedUser.room) ? 8 : 12  }>
         <div>
           <FormControl component="fieldset">
             <FormLabel component="legend">I want to chat with : </FormLabel>
@@ -132,6 +130,14 @@ const FindFriend = ({
           )}
         </div>
       </Grid>
+      {match.availableChat !== null ||
+      (match.matchedUser !== null && match.matchedUser.room) ? (
+        <Grid xs={12} sm={5} md={4}>
+          <Game />
+        </Grid>
+      ) : (
+        ""
+      )}
     </Grid>
   );
 };
