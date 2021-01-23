@@ -34,6 +34,13 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+
+
+import GoogleLogin from "react-google-login";
 
 import Chip from "@material-ui/core/Chip";
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: "10px",
   },
-
 }));
 
 const Register = ({
@@ -72,7 +78,14 @@ const Register = ({
   history,
 }) => {
   const classes = useStyles();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
 
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -132,6 +145,9 @@ const Register = ({
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
 
   const registerStepOne = () => {
     return (
@@ -195,23 +211,6 @@ const Register = ({
             )}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            name="birthday"
-            id="birthday"
-            label="Birthday"
-            fullWidth
-            type="date"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            required
-            value={birthday}
-            onChange={(e) => onChange(e)}
-          />
-        </Grid>
 
         <Grid item xs={12}>
           <TextField
@@ -220,14 +219,27 @@ const Register = ({
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             value={password}
             onChange={(e) => onChange(e)}
             autoComplete="current-password"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             variant="outlined"
             required
@@ -240,7 +252,7 @@ const Register = ({
             onChange={(e) => onChange(e)}
             autoComplete="current-password"
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <FormControl component="fieldset" fullWidth>
             <FormLabel component="legend">Gender</FormLabel>
@@ -262,11 +274,11 @@ const Register = ({
                   control={<Radio />}
                   label="Female"
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   value="other"
                   control={<Radio />}
                   label="Other"
-                />
+                /> */}
               </Box>
             </RadioGroup>
           </FormControl>
@@ -325,6 +337,22 @@ const Register = ({
                 />
               );
             }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            name="birthday"
+            id="birthday"
+            label="Birthday"
+            fullWidth
+            type="date"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={birthday}
+            onChange={(e) => onChange(e)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -428,6 +456,13 @@ const Register = ({
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <GoogleLogin
+          clientId="647276166069-05ergrt62mhaj8h3f774fkqclcd1rg0q.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={"single_host_origin"}
+        />
         <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
           {nextStep === 1 ? registerStepOne() : registerStepTwo()}
           <div className={classes.stepTwo}>

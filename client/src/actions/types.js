@@ -18,3 +18,15 @@ export const PARTNER_FINDED = "PARTNER_FINDED";
 export const PARTNER_DISCONNECTED = "PARTNER_DISCONNECTED";
 export const AVAILABLE_CHAT = "AVAILABLE_CHAT";
 export const TIMES_UP = "TIMES_UP";
+
+//game
+//tic tac toe
+export const SET_X_WIN = "SET_X_WIN";
+export const SET_O_WIN = "SET_O_WIN";
+export const SET_DRAW = "SET_DRAW";
+export const MAKE_MOVE = "MAKE_MOVE";
+export const CREATE_NEW_GAME = "CREATE_NEW_GAME";
+export const RESET_GAME_STATE = "RESET_GAME_STATE";
+export const SET_WHO_MOVE_FIRST = "SET_WHO_MOVE_FIRST";
+export const SET_GAME_MODE = "SET_GAME_MODE";
+export const SET_AI_TURN = "SET_AI_TURN";

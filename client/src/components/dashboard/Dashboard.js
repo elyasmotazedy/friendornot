@@ -16,6 +16,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Game from '../../game/ticTacToe/Game';
 
 import "./Dashboard.css";
 
@@ -49,7 +50,7 @@ const Dashboard = ({
 
           <Grid xs={12} sm={12} md={8} item style={{ marginTop: "50px" }}>
             <UserInfo />
-            {!match.partnerFinded ? <FindFriend /> : ""}
+            
             <br/>
             {match.matchedUser !== null && match.matchedUser.room ? (
               <Chat />
@@ -57,6 +58,8 @@ const Dashboard = ({
               ""
             )}
           </Grid>
+          {!match.partnerFinded ? <FindFriend /> : ""}
+          {/* <Game/> */}
           {/* <Premium /> */}
         </Grid>
       </Container>
