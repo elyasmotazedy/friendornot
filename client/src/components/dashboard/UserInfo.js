@@ -9,8 +9,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Hidden from "@material-ui/core/Hidden";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
-
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
+
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 import "./Dashboard.css";
 
@@ -29,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     height: "150px",
     [theme.breakpoints.down("sm")]: {
       margin: "auto",
-  
     },
     [theme.breakpoints.down("xs")]: {
       width: "100px",
@@ -47,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
   chips: {
     [theme.breakpoints.down("sm")]: {
-      display:'flex',
-      overflow: 'auto'
+      display: "flex",
+      overflow: "auto",
     },
   },
 }));
@@ -59,6 +64,8 @@ const UserInfo = ({
   match: { partner, matchedUser },
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const { user } = userInfo !== null ? userInfo : "";
   const [active, setActive] = useState("me");
   return (
@@ -70,40 +77,100 @@ const UserInfo = ({
           className={classes.mainAvatar}
         />
       </div>
-      <div className={classes.cardDetails}>
-        <CardContent>
-          <div className={classes.nameAndLocation}>
-            <Typography style={{textTransform : 'capitalize'}} component="h2" variant="h5">
-              {(partner && partner.name) || (user && user.name)}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {(partner && partner.profile.location.label) ||
-                (profile && profile.location.label)}
-            </Typography>
-          </div>
-          <Typography variant="subtitle1" paragraph align="justify">
-            {(partner && partner.profile.bio) || (profile && profile.bio)}
+      {matches ? (
+        <div className={classes.nameAndLocation}>
+          <Typography
+            style={{ textTransform: "capitalize" }}
+            component="h2"
+            variant="h5"
+          >
+            {(partner && partner.name) || (user && user.name)}
           </Typography>
-          <div className={classes.chips}>
-            {(partner &&
-              partner.profile.hobbies.map((item) => (
-                <Chip
-                  key={item}
-                  style={{ margin: "0 5px 5px 5px" }}
-                  label={item}
-                />
-              ))) ||
-              (profile &&
-                profile.hobbies.map((item) => (
+          <Typography variant="subtitle1" color="textSecondary">
+            {(partner && partner.profile.location.label) ||
+              (profile && profile.location.label)}
+          </Typography>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {matches ? (
+        <Accordion style={{boxShadow:'none'}}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            style={{boxShadow:'none'}}
+          >User Info</AccordionSummary>
+          <AccordionDetails style={{display: 'block'}}>
+            <div className={classes.cardDetails}>
+              <CardContent>
+                <Typography variant="subtitle1" paragraph align="justify">
+                  {(partner && partner.profile.bio) || (profile && profile.bio)}
+                </Typography>
+                <div className={classes.chips}>
+                  {(partner &&
+                    partner.profile.hobbies.map((item) => (
+                      <Chip
+                        key={item}
+                        style={{ margin: "0 5px 5px 5px" }}
+                        label={item}
+                      />
+                    ))) ||
+                    (profile &&
+                      profile.hobbies.map((item) => (
+                        <Chip
+                          key={item}
+                          style={{ margin: "0 5px 5px 5px" }}
+                          label={item}
+                        />
+                      )))}
+                </div>
+              </CardContent>
+            </div>
+          </AccordionDetails>
+        </Accordion>
+      ) : (
+        <div className={classes.cardDetails}>
+          <CardContent>
+            <div className={classes.nameAndLocation}>
+              <Typography
+                style={{ textTransform: "capitalize" }}
+                component="h2"
+                variant="h5"
+              >
+                {(partner && partner.name) || (user && user.name)}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {(partner && partner.profile.location.label) ||
+                  (profile && profile.location.label)}
+              </Typography>
+            </div>
+            <Typography variant="subtitle1" paragraph align="justify">
+              {(partner && partner.profile.bio) || (profile && profile.bio)}
+            </Typography>
+            <div className={classes.chips}>
+              {(partner &&
+                partner.profile.hobbies.map((item) => (
                   <Chip
                     key={item}
                     style={{ margin: "0 5px 5px 5px" }}
                     label={item}
                   />
-                )))}
-          </div>
-        </CardContent>
-      </div>
+                ))) ||
+                (profile &&
+                  profile.hobbies.map((item) => (
+                    <Chip
+                      key={item}
+                      style={{ margin: "0 5px 5px 5px" }}
+                      label={item}
+                    />
+                  )))}
+            </div>
+          </CardContent>
+        </div>
+      )}
 
       {/* <section className="forms-section">
         <div className="forms">

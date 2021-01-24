@@ -72,7 +72,7 @@ const FindFriend = ({
   return (
     <Grid container xs={12} item align="center" className={classes.findGender}>
       <Grid xs={12} sm={7} md={ match.availableChat !== null ||
-          (match.matchedUser !== null && match.matchedUser.room) ? 8 : 12  }>
+          (match.matchedUser !== null && match.matchedUser.room) ? 8 : 12}>
         <div>
           <FormControl component="fieldset">
             <FormLabel component="legend">I want to chat with : </FormLabel>
