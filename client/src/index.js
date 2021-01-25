@@ -9,6 +9,9 @@ const theme = createMuiTheme({
     background: {
       default: "#f3f3f3",
     },
+    primary: {
+      main: "#0097a7",
+    },
   },
   typography: {
     button: {

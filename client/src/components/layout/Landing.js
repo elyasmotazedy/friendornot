@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     marginTop: theme.spacing(8),
     zIndex: 1,
+    textAlign: "center",
   },
   image: {
     position: "relative",
@@ -114,6 +115,7 @@ const Landing = () => {
       <Hidden smDown>
         <Grid item xs={false} sm={5} md={8} className={classes.image}>
           <Box className={classes.intro}>
+            <img src="/logo1.png" />
             <Typography variant="h1" component="h2" align="center">
               FRIEND OR NOT
             </Typography>
@@ -158,7 +160,13 @@ const Landing = () => {
               </Tabs>
             </AppBar>
             {/* Alert when error happens */}
+
             <AlertMsg />
+            <Hidden mdUp>
+              <div style={{ textAlign: "center", marginTop: "30px" }}>
+                <img width="100" height="100" src="/logo1.png" />
+              </div>
+            </Hidden>
             <TabPanel value={value} index={0}>
               <Login />
             </TabPanel>

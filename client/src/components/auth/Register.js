@@ -456,13 +456,13 @@ const Register = ({
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId="647276166069-05ergrt62mhaj8h3f774fkqclcd1rg0q.apps.googleusercontent.com"
           buttonText="Login"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
-        />
+        /> */}
         <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
           {nextStep === 1 ? registerStepOne() : registerStepTwo()}
           <div className={classes.stepTwo}>

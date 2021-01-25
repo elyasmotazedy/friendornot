@@ -18,28 +18,13 @@ import "./Chat.css";
 
 let socket;
 
-function secondsToHms(d) {
-  d = Number(d);
-  var h = Math.floor(d / 3600);
-  var m = Math.floor((d % 3600) / 60);
-  var s = Math.floor((d % 3600) % 60);
-
-  var hDisplay = h > 0 ? h + (h === 1 ? " h" : "h") : "";
-  var mDisplay = m > 0 ? m + (m === 1 ? "m" : "m") : "";
-  var sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : "";
-
-  if (mDisplay) {
-    return <strong>{mDisplay}</strong>;
-  }
-  return <strong>{sDisplay}</strong>;
-}
-
 const Chat = ({
   match: { matchedUser },
   auth: { userInfo },
   partnerFinder,
   partnerDisconnected,
   timesUp,
+  setChatTime,
 }) => {
   // const { user } = userInfo !== null ? userInfo : "";
   // const [name, setName] = useState(partnerName);
@@ -55,7 +40,7 @@ const Chat = ({
   const [typeing, setTyping] = useState(null);
   const [partner, setPartner] = useState("");
   const ENDPOINT = "https://tranquil-ravine-27749.herokuapp.com";
-  // const ENDPOINT = "http://localhost:5000/"; 
+  // const ENDPOINT = "http://localhost:5000/";
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -106,7 +91,7 @@ const Chat = ({
 
   const handleDoneTyping = () => {
     setMessage("");
-    handletyping('')
+    handletyping("");
   };
   const sendMessage = (event) => {
     event.preventDefault();
@@ -115,7 +100,24 @@ const Chat = ({
       socket.emit("sendMessage", message, () => handleDoneTyping());
     }
   };
-  // console.log('matchedUser', users )
+
+
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor((d % 3600) / 60);
+    var s = Math.floor((d % 3600) % 60);
+
+    var hDisplay = h > 0 ? h + (h === 1 ? " h" : "h") : "";
+    var mDisplay = m > 0 ? m + (m === 1 ? "m" : "m") : "";
+    var sDisplay = s > 0 ? s + (s === 1 ? "s" : "s") : "";
+
+    if (mDisplay) {
+      return <strong>{mDisplay}</strong>;
+    }
+    return <strong>{sDisplay}</strong>;
+  }
+
   return users.length === 2 ? (
     <div className="outerContainer">
       <div className="container">
@@ -163,8 +165,6 @@ const Chat = ({
           profileID={userInfo.profile._id}
           PartnerProfileID={users[1].profile._id}
           users={users}
-
-          
         />
         <Input
           message={message}

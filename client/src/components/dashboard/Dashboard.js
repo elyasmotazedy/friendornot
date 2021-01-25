@@ -14,9 +14,7 @@ import { cancelMatch } from "../../actions/match";
 import Chat from "../Chat/Chat";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-
 import { makeStyles } from "@material-ui/core/styles";
-import Game from "../../game/ticTacToe/Game";
 
 import "./Dashboard.css";
 
@@ -28,9 +26,18 @@ const Dashboard = ({
   match,
 }) => {
   const classes = useStyles();
+
   useEffect(() => {
     getCurrentProfile();
   }, []);
+
+  useEffect(() => {
+    if (match.matchedUser !== null && match.matchedUser.room && match.partner) {
+      window.addEventListener("beforeunload", (e) => {
+        e.preventDefault();
+      });
+    }
+  }, [match]);
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
@@ -39,6 +46,7 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <Fragment>
+
       <Grid xs={12} item>
         <Nav />
       </Grid>
@@ -48,10 +56,10 @@ const Dashboard = ({
             <AlertMsg />
           </Grid>
 
-          <Grid xs={12} sm={12} md={8} item style={{ marginTop: "30px" }}>
+          <Grid xs={12} sm={12} md={9} item style={{ marginTop: "30px" }}>
             <UserInfo />
           </Grid>
-          <Grid xs={12} sm={12} md={8} item >
+          <Grid xs={12} sm={12} md={9} item>
             {!match.partnerFinded ? <FindFriend /> : ""}
 
             {match.matchedUser !== null && match.matchedUser.room ? (

@@ -71,7 +71,6 @@ export class Board extends Component {
   }
 
   render() {
-  console.log(this.props.squares)
     let winningLineClass = "";
 
     if (this.props.isGameEnd) {
