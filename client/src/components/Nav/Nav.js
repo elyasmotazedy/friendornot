@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logout } from "../../actions/auth";
+import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/auth';
 
-import Box from "@material-ui/core/Box";
-import SettingsIcon from "@material-ui/icons/Settings";
-import Avatar from "@material-ui/core/Avatar";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Button from "@material-ui/core/Button";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import Container from "@material-ui/core/Container";
+import Box from '@material-ui/core/Box';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Avatar from '@material-ui/core/Avatar';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import Container from '@material-ui/core/Container';
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   userNav: {
@@ -26,21 +26,21 @@ const useStyles = makeStyles((theme) => ({
     // borderRadius: "10px",
   },
   avatar: {
-    width: "40px",
-    height: "40px",
+    width: '40px',
+    height: '40px',
   },
   title: {
     flexGrow: 1,
     marginLeft: theme.spacing(5),
   },
   navItemContainer: {
-    display: "block",
-    "&:hover": {
-      background: "unset",
+    display: 'block',
+    '&:hover': {
+      background: 'unset',
     },
   },
   navItem: {
-    display: "block",
+    display: 'block',
   },
 }));
 
@@ -55,7 +55,7 @@ const Nav = ({ auth: { userInfo }, logout, history }) => {
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { user } = userInfo !== null ? userInfo : "";
+  const { user } = userInfo !== null ? userInfo : '';
   return (
     <AppBar position="static" className={classes.userNav}>
       <Container>
@@ -78,7 +78,7 @@ const Nav = ({ auth: { userInfo }, logout, history }) => {
               aria-haspopup="true"
               onClick={handleClick}
             >
-              <MoreVertIcon style={{ color: "#fff" }} />
+              <MoreVertIcon style={{ color: '#fff' }} />
             </IconButton>
             <Menu
               id="long-menu"

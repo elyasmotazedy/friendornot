@@ -1,72 +1,71 @@
-import React, { useState, Fragment } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import { connect } from "react-redux";
-import { setAlert } from "../../actions/alert";
-import { register } from "../../actions/auth";
-import PropTypes from "prop-types";
-import { countries } from "../../utils/countries";
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
+import { countries } from '../../utils/countries';
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { Redirect } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import { createProfile } from "../../actions/profile";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { Redirect } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import { createProfile } from '../../actions/profile';
 
-import LanguageIcon from "@material-ui/icons/Language";
-import YouTubeIcon from "@material-ui/icons/YouTube";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
+import LanguageIcon from '@material-ui/icons/Language';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 
+import GoogleLogin from 'react-google-login';
 
-import GoogleLogin from "react-google-login";
-
-import Chip from "@material-ui/core/Chip";
+import Chip from '@material-ui/core/Chip';
 const useStyles = makeStyles((theme) => ({
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
 
   step: {
     // display: "flex",
     // justifyContent: "end",
-    marginTop: "10px",
+    marginTop: '10px',
   },
   stepTwo: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "10px",
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '10px',
   },
 }));
 
@@ -87,21 +86,21 @@ const Register = ({
     event.preventDefault();
   };
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    location: "",
-    gender: "male",
-    birthday: new Date("2014-08-18T21:11:54"),
-    password: "",
-    password2: "",
-    bio: "",
+    name: '',
+    email: '',
+    location: '',
+    gender: 'male',
+    birthday: new Date('2014-08-18T21:11:54'),
+    password: '',
+    password2: '',
+    bio: '',
     hobbies: [],
-    website: "",
-    youtube: "",
-    twitter: "",
-    facebook: "",
-    linkedin: "",
-    instagram: "",
+    website: '',
+    youtube: '',
+    twitter: '',
+    facebook: '',
+    linkedin: '',
+    instagram: '',
   });
 
   const [nextStep, setNextStep] = useState(1);
@@ -130,7 +129,7 @@ const Register = ({
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert("passwords do not match", "error");
+      setAlert('passwords do not match', 'error');
     } else {
       register(formData);
     }
@@ -145,9 +144,9 @@ const Register = ({
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
-  const responseGoogle = (response) => {
-    console.log(response);
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // };
 
   const registerStepOne = () => {
     return (
@@ -219,7 +218,7 @@ const Register = ({
             fullWidth
             name="password"
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e) => onChange(e)}
@@ -328,7 +327,7 @@ const Register = ({
             renderInput={(params) => {
               return (
                 <TextField
-                  id="angholi"
+                  id="Hobbies"
                   {...params}
                   variant="outlined"
                   label="Hobbies"
