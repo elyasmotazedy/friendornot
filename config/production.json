@@ -1,5 +1,5 @@
 {
     "mongoURI": "yourDB",
-    "jwtSecret": "mysecrettoken"
+    "jwtSecret": "your token"
   }
   
